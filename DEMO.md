@@ -6,13 +6,18 @@
 node dev-server.mjs
 ```
 
+**Live URL: https://macro-track-022114835853075413231.vercel.app**
+
 Local review URL: **http://127.0.0.1:4174**
 
 Port 4173 was already held by another prototype on this machine, so the preview was started with
 `$env:PORT=4174; node dev-server.mjs`. The server binds `127.0.0.1`. Stop it with `Ctrl+C` in the
 terminal running the job.
 
-Live URL: not deployed yet. The push and deploy wait for the user's approval of this local build.
+The live deployment was verified on 2026-10-27: `/`, `/styles.css`, `/app.js`, `/data.js`,
+`/manifest.webmanifest`, `/sw.js` and `/icons/icon-192.png` all return 200, and a live
+`POST /api/meal-plan` returns 200 with a three-day plan and `1/3` usage. Deployment id:
+`dpl_H1HQJP56bTJMy9DNaGwD2NcynNSH`.
 
 ## The path to walk
 

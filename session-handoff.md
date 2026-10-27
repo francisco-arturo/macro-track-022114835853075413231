@@ -2,20 +2,22 @@
 
 ## Last Updated
 
-- 2026-10-27 — Fit Code Nutrition demo built, verified and handed over locally.
+- 2026-10-27 — Fit Code Nutrition demo built, verified, pushed and deployed. Repository and live URL
+  are recorded below.
 
 ## Current Objective
 
-Wait for the user to review the local build. On approval, confirm the repository URL they create,
-add it to `github.json` -> `push_policy.approved_remotes`, push, then deploy with
-`node .harness/deploy.mjs macro-track-022114835853075413231` from the workspace root. No proposal
-unless the user asks for one.
+The user asked for a proposal. The build is pushed to
+`https://github.com/francisco-arturo/macro-track-022114835853075413231` and live at
+**https://macro-track-022114835853075413231.vercel.app** (deployment `dpl_H1HQJP56bTJMy9DNaGwD2NcynNSH`).
+The standard opener can cite the live URL and the repository offer is true.
 
 ## Recommended Next Step
 
-1. Open **http://127.0.0.1:4174** and walk `DEMO.md`.
-2. If approved, ask for the GitHub repository URL.
-3. Push and deploy; then update `DEMO.md`, `progress.md` and `feature_list.json` with the live URL.
+1. Draft the proposal in chat only, using `upwork-kit/PLAYBOOK.md` and `CHECKLIST.md`.
+2. Do not invent Supabase proof: no prototype in this workspace is connected to Supabase. The one
+   screening gap must be filled by the user with a real app URL and the part they wrote.
+3. Do not write the draft to the kit and do not log it in `TRACKER.csv` until it is sent.
 
 ## Files
 
@@ -29,6 +31,8 @@ unless the user asks for one.
 - `dev-server.mjs`, `verify.mjs` — local server and verification (excluded from deploy).
 - `manifest.webmanifest`, `sw.js`, `icons/` — PWA assets.
 - `init.ps1` / `init.sh` — verification entrypoints; both call `node verify.mjs`.
+- Repository: https://github.com/francisco-arturo/macro-track-022114835853075413231
+- Live: https://macro-track-022114835853075413231.vercel.app
 
 ## Blockers
 

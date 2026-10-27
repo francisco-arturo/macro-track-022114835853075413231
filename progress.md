@@ -9,6 +9,9 @@
   inputs, a per-member daily limit, a server-only Anthropic key and a deterministic demo fallback.
 - PWA shell is in place: manifest, service worker, 192/512/maskable icons and Apple touch icon.
 - Seeds live in `data.js`; member state persists to `localStorage` for the demo.
+- Pushed to `https://github.com/francisco-arturo/macro-track-022114835853075413231` and deployed to
+  **https://macro-track-022114835853075413231.vercel.app** (deployment
+  `dpl_H1HQJP56bTJMy9DNaGwD2NcynNSH`, READY). Live routes and `POST /api/meal-plan` were verified 200.
 - No Supabase project is connected yet. README documents the production schema, RLS policies and
   cutover order; `DEMO.md` is explicit about what is simulated.
 
@@ -20,6 +23,7 @@ Vercel and send the live URL back. No proposal until the user asks for one.
 ## Last Updated
 
 - **Last Updated**: 2026-10-27
+- **Live URL**: https://macro-track-022114835853075413231.vercel.app
 - **Review URL**: http://127.0.0.1:4174 (port 4173 was already in use by another prototype)
 - **Run command**: `$env:PORT=4174; node dev-server.mjs`
 
@@ -32,6 +36,10 @@ Vercel and send the live URL back. No proposal until the user asks for one.
 | temporary jsdom interaction smoke | 25/25 passed: seeded render, quick log with hand portions, plan view, generation usage, charts, owner table, weigh-in, account and delete state |
 | `Invoke-WebRequest http://127.0.0.1:4174/` | HTTP 200 |
 | `git commit -m "Build Fit Code Nutrition prototype"` | local root commit `e656e49`, clean working tree |
+| `git push -u origin main` | pushed to https://github.com/francisco-arturo/macro-track-022114835853075413231 |
+| `node .harness/deploy.mjs macro-track-022114835853075413231` | READY in 9s; `dpl_H1HQJP56bTJMy9DNaGwD2NcynNSH`; live alias `https://macro-track-022114835853075413231.vercel.app` |
+| live Node fetch of `/`, CSS, app, data, manifest, SW, icon | all 200 |
+| live `POST /api/meal-plan` | 200; three-day plan; `1/3` usage; `source: demo` with no key |
 | `node .harness/build-clock.mjs check` at handover | budget was within the 20-minute band at the last successful check |
 
 ## Verification Evidence
@@ -47,8 +55,9 @@ Vercel and send the live URL back. No proposal until the user asks for one.
 
 ## Next
 
-1. User reviews http://127.0.0.1:4174 on desktop and phone width.
-2. On approval: user supplies the GitHub repository URL, then push and deploy.
+1. Proposal drafted in chat from `upwork-kit/`, with the live URL in the standard opener.
+2. One proof gap remains: the listing asks for a live app built with Supabase. No prototype in this
+   workspace is actually connected to Supabase, so the answer must not invent one.
 3. Production Phase 1 work is not in this prototype; see README for the Supabase cutover.
 
 ## Blockers
