@@ -31,6 +31,7 @@ Vercel and send the live URL back. No proposal until the user asks for one.
 | `node verify.mjs` | same suite through the direct Node entrypoint |
 | temporary jsdom interaction smoke | 25/25 passed: seeded render, quick log with hand portions, plan view, generation usage, charts, owner table, weigh-in, account and delete state |
 | `Invoke-WebRequest http://127.0.0.1:4174/` | HTTP 200 |
+| `git commit -m "Build Fit Code Nutrition prototype"` | local root commit `e656e49`, clean working tree |
 | `node .harness/build-clock.mjs check` at handover | budget was within the 20-minute band at the last successful check |
 
 ## Verification Evidence
