@@ -22,7 +22,7 @@ const ui = {
   food: null,
   unit: "oz",
   qty: 0,
-  meal: "Breakfast",
+  meal: "Desayuno",
   planDay: 0,
   deferredInstall: null,
   toastTimer: null,
@@ -37,7 +37,7 @@ const GLYPHS = {
   fat: "i-fat",
 };
 
-const MEAL_ORDER = ["Breakfast", "Lunch", "Dinner", "Snacks"];
+const MEAL_ORDER = ["Desayuno", "Almuerzo", "Meriendas", "Cena"];
 const RING_RADIUS = 72;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
@@ -55,7 +55,14 @@ function round(value, digits = 0) {
 }
 
 function formatNumber(value) {
-  return new Intl.NumberFormat("en-US").format(value);
+  return new Intl.NumberFormat("es-US").format(value);
+}
+
+function formatDecimal(value, digits = 1) {
+  return Number(value).toLocaleString("es-US", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
 }
 
 function icon(name, className = "icon") {
@@ -68,10 +75,10 @@ function foodOrb(food, extraClass = "") {
 
 function defaultMeal() {
   const hour = new Date().getHours();
-  if (hour < 11) return "Breakfast";
-  if (hour < 15) return "Lunch";
-  if (hour < 18) return "Snacks";
-  return "Dinner";
+  if (hour < 11) return "Desayuno";
+  if (hour < 15) return "Almuerzo";
+  if (hour < 18) return "Meriendas";
+  return "Cena";
 }
 
 function errorMessage(message) {
@@ -97,11 +104,11 @@ function renderAll() {
 function renderShell() {
   const now = new Date();
   const hour = now.getHours();
-  const greeting = hour < 12 ? "Good morning," : hour < 17 ? "Good afternoon," : "Good evening,";
+  const greeting = hour < 12 ? "Buenos días," : hour < 17 ? "Buenas tardes," : "Buenas noches,";
   const totals = totalsFor(state.logs);
   const proteinLeft = Math.max(0, state.targets.protein - totals.protein);
 
-  $("#todayLabel").textContent = now.toLocaleDateString("en-US", {
+  $("#todayLabel").textContent = now.toLocaleDateString("es-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -112,9 +119,9 @@ function renderShell() {
   $("#bestStreak").textContent = state.bestStreak;
   $("#heroCopy").innerHTML =
     proteinLeft > 0
-      ? `Day ${state.streak} of your streak. <strong>${proteinLeft}g of protein left</strong> to hit today's target.`
-      : `Day ${state.streak} of your streak. <strong>Protein target hit.</strong> Now finish the day strong.`;
-  $("#calorieTargetPill").textContent = `${formatNumber(state.targets.calories)} kcal target`;
+      ? `Día ${state.streak} de tu racha. <strong>Te quedan ${proteinLeft} g de proteína</strong> para llegar al objetivo de hoy.`
+      : `Día ${state.streak} de tu racha. <strong>Objetivo de proteína cumplido.</strong> Ahora termina el día con fuerza.`;
+  $("#calorieTargetPill").textContent = `Objetivo: ${formatNumber(state.targets.calories)} kcal`;
 }
 
 function renderFuel() {
@@ -138,9 +145,9 @@ function renderFuel() {
     const target = state.targets[targetKey];
     const consumed = totals[key];
     const left = Math.max(0, target - consumed);
-    $(`#${valueId}`).textContent = `${consumed} / ${target}g`;
+    $(`#${valueId}`).textContent = `${consumed} / ${target} g`;
     $(`#${barId}`).style.width = `${Math.min(100, (consumed / target) * 100)}%`;
-    $(`#${leftId}`).textContent = left > 0 ? `${left}g left` : "target hit";
+    $(`#${leftId}`).textContent = left > 0 ? `Quedan ${left} g` : "objetivo cumplido";
   }
 }
 
@@ -186,9 +193,9 @@ function renderMeals() {
               </div>
               <div class="log-kcal">
                 <strong>${Math.round(log.kcal)}</strong>
-                <span>${Math.round(log.protein)}P · ${Math.round(log.carbs)}C · ${Math.round(log.fat)}F</span>
+                <span>${Math.round(log.protein)} P · ${Math.round(log.carbs)} C · ${Math.round(log.fat)} G</span>
               </div>
-              <button class="log-remove" data-remove="${esc(log.id)}" aria-label="Remove ${esc(log.name)}">
+              <button class="log-remove" data-remove="${esc(log.id)}" aria-label="Eliminar ${esc(log.name)}">
                 ${icon("close")}
               </button>
             </div>`,
@@ -199,7 +206,7 @@ function renderMeals() {
     .join("");
 
   $("#mealGroups").innerHTML =
-    html || `<div class="meal-group empty-log"><p>Nothing logged yet. Start with protein.</p></div>`;
+    html || `<div class="meal-group empty-log"><p>Nada registrado todavía. Empieza con proteína.</p></div>`;
 }
 
 function renderWater() {
@@ -208,7 +215,7 @@ function renderWater() {
   $("#waterCups").innerHTML = Array.from({ length: state.targets.water }, (_, i) => {
     const filled = i < cups;
     return `<button class="cup ${filled ? "is-filled" : ""}" data-cup="${i + 1}" aria-label="${
-      filled ? `Set water to ${i + 1} cups` : `Fill cup ${i + 1}`
+      filled ? `Poner el agua en ${i + 1} vasos` : `Llenar el vaso ${i + 1}`
     }" aria-pressed="${filled}"></button>`;
   }).join("");
 }
@@ -227,21 +234,21 @@ function renderAI() {
     { length: state.aiUsage.limit },
     (_, i) => `<span class="${i < state.aiUsage.used ? "is-used" : ""}"></span>`,
   ).join("");
-  $("#aiUsageLabel").textContent = `${remaining} of ${state.aiUsage.limit} generations left`;
-  $("#planUsageBadge").textContent = `${remaining} left`;
+  $("#aiUsageLabel").textContent = `Quedan ${remaining} de ${state.aiUsage.limit} generaciones`;
+  $("#planUsageBadge").textContent = `Quedan ${remaining}`;
   $("#generatePlan").disabled = remaining === 0;
   $("#planStatus").textContent =
     remaining === 0
-      ? "Daily limit reached. It resets at midnight."
-      : "Uses one of your 3 daily generations.";
+      ? "Límite diario alcanzado. Se reinicia a medianoche."
+      : "Usa una de tus 3 generaciones diarias.";
 }
 
 function renderPlan() {
   const plan = state.plan;
-  $("#planTitle").textContent = plan.title || "3-day strength block";
-  $("#planMeta").textContent = plan.subtitle || "Built around your targets";
+  $("#planTitle").textContent = plan.title || "Bloque de fuerza de 3 días";
+  $("#planMeta").textContent = plan.subtitle || "Ajustado a tus objetivos";
   $("#planSource").textContent =
-    plan.source === "anthropic" ? "Generated with Claude · just now" : "Demo plan · saved on this device";
+    plan.source === "anthropic" ? "Generado con Claude · ahora" : "Plan demo · guardado en este dispositivo";
 
   if (ui.planDay >= plan.days.length) ui.planDay = 0;
   $("#planDayTabs").innerHTML = plan.days
@@ -269,12 +276,12 @@ function renderPlan() {
     <section class="plan-day-card">
       <div class="plan-day-head">
         <div>
-          <p class="panel-kicker">${esc(day.label)} · training day</p>
+          <p class="panel-kicker">${esc(day.label)} · día de entrenamiento</p>
           <h2>${esc(day.focus)}</h2>
         </div>
         <div class="day-total">
           <strong>${formatNumber(totals.kcal)}</strong>
-          <span>kcal · ${totals.protein}P / ${totals.carbs}C / ${totals.fat}F</span>
+          <span>kcal · ${totals.protein} P / ${totals.carbs} C / ${totals.fat} G</span>
         </div>
       </div>
       ${day.meals
@@ -287,9 +294,9 @@ function renderPlan() {
             <span>${esc(meal.description)}</span>
           </div>
           <div class="plan-macros">
-            <span><strong>${meal.protein}g</strong> P</span>
-            <span><strong>${meal.carbs}g</strong> C</span>
-            <span><strong>${meal.fat}g</strong> F</span>
+            <span><strong>${meal.protein} g</strong> P</span>
+            <span><strong>${meal.carbs} g</strong> C</span>
+            <span><strong>${meal.fat} g</strong> G</span>
             <span><strong>${meal.kcal}</strong> kcal</span>
           </div>
         </div>`,
@@ -298,7 +305,7 @@ function renderPlan() {
     </section>`;
 
   const grocery = plan.grocery || DEMO_PLAN.grocery;
-  $("#groceryCount").textContent = `${grocery.length} items`;
+  $("#groceryCount").textContent = `${grocery.length} artículos`;
   $("#groceryList").innerHTML = grocery
     .map(
       (item, index) => `
@@ -331,12 +338,12 @@ function renderProgress() {
   const proteinAvg = Math.round(state.proteinHistory.reduce((sum, v) => sum + v, 0) / state.proteinHistory.length);
   const proteinPct = Math.round((proteinAvg / state.targets.protein) * 100);
 
-  $("#latestWeight").textContent = last.value.toFixed(1);
-  $("#weightDelta").textContent = `${delta < 0 ? "−" : delta > 0 ? "+" : ""}${Math.abs(delta).toFixed(
-    1,
-  )} lb since ${shortDate(first.date)}`;
+  $("#latestWeight").textContent = formatDecimal(last.value);
+  $("#weightDelta").textContent = `${delta < 0 ? "−" : delta > 0 ? "+" : ""}${formatDecimal(
+    Math.abs(delta),
+  )} lb desde el ${shortDate(first.date)}`;
   $("#proteinAvg").textContent = proteinAvg;
-  $("#proteinPct").textContent = `${proteinPct}% of target`;
+  $("#proteinPct").textContent = `${proteinPct} % del objetivo`;
   $("#streakStat").textContent = state.streak;
   $("#weightRange").textContent = `${shortDate(first.date)} – ${shortDate(last.date)}`;
 
@@ -408,7 +415,7 @@ function renderWeightChart(weights) {
       <path class="chart-area" d="${areaPath}" />
       <path class="chart-line" d="${linePath}" />
       ${dots}
-      <text class="chart-callout" x="${(lastPoint[0] - 6).toFixed(1)}" y="${(lastPoint[1] - 13).toFixed(1)}" text-anchor="end">${weights.at(-1).value.toFixed(1)} lb</text>
+      <text class="chart-callout" x="${(lastPoint[0] - 6).toFixed(1)}" y="${(lastPoint[1] - 13).toFixed(1)}" text-anchor="end">${formatDecimal(weights.at(-1).value)} lb</text>
       ${labels}
     </svg>`;
 }
@@ -421,10 +428,10 @@ function renderProteinChart() {
     .map((value, index) => {
       const below = value < state.targets.protein * 0.9;
       const date = days[index];
-      const day = new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" });
+      const day = new Date(`${date}T12:00:00`).toLocaleDateString("es-US", { weekday: "short" });
       return `<div class="protein-bar-wrap" title="${day}: ${value}g protein">
         <div class="protein-bar ${below ? "is-below" : ""}" style="height:${Math.min(100, (value / max) * 100)}%"></div>
-        <span class="protein-bar-label">${day.slice(0, 2)}</span>
+        <span class="protein-bar-label">${day.replace(".", "").slice(0, 3)}</span>
       </div>`;
     })
     .join("");
@@ -469,9 +476,9 @@ function summaryRows() {
 
 function statusFor(row) {
   const ratio = row.proteinAvg / row.proteinTarget;
-  if (row.daysSince >= 5 || row.streak === 0) return { label: "At risk", key: "at-risk" };
-  if (row.daysSince >= 2 || ratio < 0.85) return { label: "Watch", key: "watch" };
-  return { label: "On track", key: "on-track" };
+  if (row.daysSince >= 5 || row.streak === 0) return { label: "En riesgo", key: "at-risk" };
+  if (row.daysSince >= 2 || ratio < 0.85) return { label: "Vigilar", key: "watch" };
+  return { label: "En curso", key: "on-track" };
 }
 
 function renderReview() {
@@ -485,7 +492,7 @@ function renderReview() {
   $("#reviewCount").textContent = assessed.length;
   $("#reviewAtRisk").textContent = atRisk;
   $("#reviewAvg").textContent = avg;
-  $("#reviewUpdated").textContent = `Updated ${new Date().toLocaleTimeString("en-US", {
+  $("#reviewUpdated").textContent = `Actualizado ${new Date().toLocaleTimeString("es-US", {
     hour: "numeric",
     minute: "2-digit",
   })}`;
@@ -493,23 +500,23 @@ function renderReview() {
   $("#summaryRows").innerHTML = assessed
     .map((row) => {
       const ratio = Math.round((row.proteinAvg / row.proteinTarget) * 100);
-      const trendText = `${row.trend > 0 ? "+" : ""}${row.trend.toFixed(1)} lb`;
+      const trendText = `${row.trend > 0 ? "+" : ""}${formatDecimal(row.trend)} lb`;
       return `<tr>
         <td>
           <div class="member-cell">
             <span class="member-avatar">${esc(row.initials)}</span>
-            <span><strong>${esc(row.name)}${row.isDemo ? " (you)" : ""}</strong><span>${
-              row.isDemo ? "Seeded demo member" : "Fit Code member"
+            <span><strong>${esc(row.name)}${row.isDemo ? " (tú)" : ""}</strong><span>${
+              row.isDemo ? "Miembro demo" : "Miembro de Fit Code"
             }</span></span>
           </div>
         </td>
-        <td class="days-cell"><strong>${row.daysSince}</strong> <span>${row.daysSince === 1 ? "day" : "days"}</span></td>
-        <td class="streak-cell">${row.streak}d</td>
+        <td class="days-cell"><strong>${row.daysSince}</strong> <span>${row.daysSince === 1 ? "día" : "días"}</span></td>
+        <td class="streak-cell">${row.streak} d</td>
         <td class="protein-cell">
-          <div class="protein-cell-top"><strong>${row.proteinAvg}g</strong><span>/ ${row.proteinTarget}g · ${ratio}%</span></div>
+          <div class="protein-cell-top"><strong>${row.proteinAvg} g</strong><span>/ ${row.proteinTarget} g · ${ratio} %</span></div>
           <div class="protein-mini"><span style="width:${Math.min(100, ratio)}%"></span></div>
         </td>
-        <td class="weight-cell">${row.weight.toFixed(1)} lb<span>${trendText}</span></td>
+        <td class="weight-cell">${formatDecimal(row.weight)} lb<span>${trendText}</span></td>
         <td><span class="status-chip ${row.status.key}">${row.status.label}</span></td>
       </tr>`;
     })
@@ -524,7 +531,7 @@ function renderAccount() {
   $("#accountAvatar").textContent = state.member.initials;
   $("#accountName").textContent = state.member.name;
   $("#accountEmail").textContent = state.member.email;
-  $("#accountRole").textContent = state.member.role === "admin" ? "Admin" : "Member";
+  $("#accountRole").textContent = state.member.role === "admin" ? "Administrador" : "Miembro";
   $("#accountLocation").textContent = state.member.location;
   $("#accountSince").textContent = state.member.memberSince;
   $("#accountCoach").textContent = state.member.coach;
@@ -586,12 +593,12 @@ function renderFoodList(query = "") {
           ${foodOrb(food)}
           <span class="food-option-copy">
             <strong>${esc(food.name)}</strong>
-            <span>${food.servingOz} oz · ${food.kcal} kcal</span>
+            <span>${formatQty(food.servingOz)} oz · ${food.kcal} kcal</span>
           </span>
         </button>`,
         )
         .join("")
-    : `<p class="food-empty">No match. Try chicken, rice, eggs or shake.</p>`;
+    : `<p class="food-empty">Sin resultados. Prueba pollo, arroz, huevos o batido.</p>`;
 }
 
 function selectFood(food) {
@@ -613,14 +620,12 @@ function selectFood(food) {
 }
 
 function handLabel(food, qty) {
-  const parts = food.handLabel.split(" ");
-  parts[0] = formatQty(qty);
-  if (qty !== 1) parts[parts.length - 1] = `${parts[parts.length - 1]}s`;
-  return parts.join(" ");
+  if (qty === 1) return food.handLabel;
+  return `${formatQty(qty)} ${food.handPlural}`;
 }
 
 function formatQty(qty) {
-  return Number.isInteger(qty) ? String(qty) : qty.toFixed(1);
+  return Number(qty).toLocaleString("es-US", { maximumFractionDigits: 1 });
 }
 
 function portionMultiplier() {
@@ -644,17 +649,17 @@ function renderPortion() {
   const fat = Math.round(ui.food.fat * multiplier);
 
   $("#qtyValue").textContent = formatQty(ui.qty);
-  $("#qtyUnit").textContent = ui.unit === "oz" ? "oz" : "portion";
+  $("#qtyUnit").textContent = ui.unit === "oz" ? "oz" : ui.qty === 1 ? "porción" : "porciones";
   $("#selectedKcal").textContent = `${kcal} kcal`;
   $("#previewKcal").textContent = kcal;
-  $("#previewProtein").textContent = `${protein}g`;
-  $("#previewCarbs").textContent = `${carbs}g`;
-  $("#previewFat").textContent = `${fat}g`;
+  $("#previewProtein").textContent = `${protein} g`;
+  $("#previewCarbs").textContent = `${carbs} g`;
+  $("#previewFat").textContent = `${fat} g`;
 
   if (ui.unit === "oz") {
-    $("#portionHint").textContent = `${formatQty(ui.qty)} oz · about ${Math.round(
+    $("#portionHint").textContent = `${formatQty(ui.qty)} oz · aprox. ${Math.round(
       ui.qty * 28.35,
-    )}g · 1 ${ui.food.handLabel.split(" ").slice(1).join(" ")} ≈ ${ui.food.handOz} oz`;
+    )} g · ${ui.food.handLabel} ≈ ${ui.food.handOz} oz`;
   } else {
     const ounces = portionOunces();
     $("#portionHint").textContent = `${handLabel(ui.food, ui.qty)} ≈ ${formatQty(round(ounces, 1))} oz`;
@@ -681,7 +686,7 @@ function addFoodToLog() {
   const log = {
     id: `log_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
     meal: ui.meal,
-    time: new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }),
+    time: new Date().toLocaleTimeString("es-US", { hour: "numeric", minute: "2-digit" }),
     foodId: ui.food.id,
     name: ui.food.name,
     detail: ui.food.detail,
@@ -700,7 +705,7 @@ function addFoodToLog() {
   renderMeals();
   renderShell();
   $("#logDialog").close();
-  toast(`${log.name} added to ${log.meal}.`);
+  toast(`Registrado: ${log.name} en ${log.meal}.`);
 }
 
 /* ------------------------------------------------------------------ */
@@ -710,10 +715,10 @@ function addFoodToLog() {
 function localPlan(prefs) {
   const plan = structuredClone(DEMO_PLAN);
   const goal = prefs.goal.toLowerCase();
-  plan.title = `${prefs.days}-day ${goal} block`;
-  plan.subtitle = prefs.diet === "High protein"
-    ? `Built around ${formatNumber(state.targets.calories)} kcal and ${state.targets.protein}g protein`
-    : `${prefs.diet} · built around your current target`;
+  plan.title = `${prefs.days} días · ${goal}`;
+  plan.subtitle = prefs.diet === "Alta proteína"
+    ? `Ajustado a ${formatNumber(state.targets.calories)} kcal y ${state.targets.protein} g de proteína`
+    : `${prefs.diet} · ajustado a tu objetivo actual`;
   plan.source = "demo";
   return plan;
 }
@@ -731,8 +736,8 @@ async function generatePlan() {
   const label = $(".btn-label", button);
   const original = label.textContent;
   button.disabled = true;
-  label.textContent = "Building your plan…";
-  $("#planStatus").textContent = "Checking targets, then writing meals.";
+  label.textContent = "Armando tu plan…";
+  $("#planStatus").textContent = "Revisando objetivos y escribiendo comidas.";
 
   const minimumDelay = new Promise((resolve) => setTimeout(resolve, 850));
 
@@ -766,7 +771,7 @@ async function generatePlan() {
         saveState(state);
         renderAI();
       }
-      toast("Daily AI limit reached. It resets at midnight.");
+      toast("Límite diario de IA alcanzado. Se reinicia a medianoche.");
       return;
     }
 
@@ -779,11 +784,11 @@ async function generatePlan() {
     ui.planDay = 0;
     renderAI();
     renderPlan();
-    toast("New plan saved. Your next 3 days are ready.");
+    toast("Plan nuevo guardado. Tus próximos 3 días están listos.");
   } catch {
     await minimumDelay;
     if (aiRemaining() <= 0) {
-      toast("Daily AI limit reached. It resets at midnight.");
+      toast("Límite diario de IA alcanzado. Se reinicia a medianoche.");
       return;
     }
     state.plan = localPlan(prefs);
@@ -793,7 +798,7 @@ async function generatePlan() {
     ui.planDay = 0;
     renderAI();
     renderPlan();
-    toast("Demo plan rebuilt. Add an Anthropic key to call the live model.");
+    toast("Plan demo reconstruido. Añade una clave de Anthropic para llamar al modelo real.");
   } finally {
     label.textContent = original;
     button.disabled = aiRemaining() === 0;
@@ -815,7 +820,7 @@ function openWeightDialog() {
 function saveWeight() {
   const value = Number($("#weightInput").value);
   if (!Number.isFinite(value) || value < 60 || value > 500) {
-    toast("Enter a weight between 60 and 500 lb.");
+    toast("Introduce un peso entre 60 y 500 lb.");
     return;
   }
   const today = todayISO();
@@ -826,45 +831,45 @@ function saveWeight() {
   saveState(state);
   $("#weightDialog").close();
   renderProgress();
-  toast(`Weigh-in saved at ${value.toFixed(1)} lb.`);
+  toast(`Pesaje guardado en ${formatDecimal(value)} lb.`);
 }
 
 function exportData() {
   const payload = {
-    app: "Fit Code Nutrition",
-    exportedAt: new Date().toISOString(),
-    member: state.member,
-    targets: state.targets,
-    mealLogs: state.logs.map(({ id, meal, time, name, detail, amountLabel, kcal, protein, carbs, fat }) => ({
+    app: "Fit Code Nutrición",
+    exportadoEl: new Date().toISOString(),
+    miembro: state.member,
+    objetivos: state.targets,
+    comidas: state.logs.map(({ id, meal, time, name, detail, amountLabel, kcal, protein, carbs, fat }) => ({
       id,
-      meal,
-      time,
-      name,
-      detail,
-      amountLabel,
+      comida: meal,
+      hora: time,
+      nombre: name,
+      detalle: detail,
+      porcion: amountLabel,
       kcal,
-      protein,
-      carbs,
-      fat,
+      proteina: protein,
+      carbohidratos: carbs,
+      grasas: fat,
     })),
-    dailyLogs: state.weights.map((point) => ({
-      date: point.date,
-      weightLb: point.value,
+    registrosDiarios: state.weights.map((point) => ({
+      fecha: point.date,
+      pesoLb: point.value,
     })),
-    waterLogs: [{ date: state.day, cups: state.water }],
-    mealPlan: state.plan,
-    aiUsage: state.aiUsage,
+    registrosAgua: [{ fecha: state.day, vasos: state.water }],
+    planDeComidas: state.plan,
+    usoIA: state.aiUsage,
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `fit-code-${state.member.firstName.toLowerCase()}-export.json`;
+  link.download = `fit-code-${state.member.firstName.toLowerCase()}-datos.json`;
   document.body.append(link);
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
-  toast("Export downloaded as JSON.");
+  toast("Exportación descargada en JSON.");
 }
 
 function resetDemo() {
@@ -877,7 +882,7 @@ function resetDemo() {
   renderAll();
   setPlanControls();
   setView("today");
-  toast("Demo data restored.");
+  toast("Datos demo restaurados.");
 }
 
 function showFarewell() {
@@ -887,7 +892,7 @@ function showFarewell() {
     element.hidden = true;
   });
   $("#farewell").hidden = false;
-  document.title = "Account deleted · Fit Code";
+  document.title = "Cuenta eliminada · Fit Code";
   window.scrollTo(0, 0);
 }
 
@@ -992,10 +997,10 @@ function bindEvents() {
     renderFuel();
     renderMeals();
     renderShell();
-    toast(`${log?.name || "Item"} removed.`);
+    toast(`Eliminado: ${log?.name || "registro"}.`);
   });
 
-  $("#plannedDinner").addEventListener("click", () => openLogDialog({ foodId: "salmon", meal: "Dinner" }));
+  $("#plannedDinner").addEventListener("click", () => openLogDialog({ foodId: "salmon", meal: "Cena" }));
 
   // water
   $("#waterCups").addEventListener("click", (event) => {
@@ -1009,7 +1014,7 @@ function bindEvents() {
     state.water = Math.min(state.targets.water, state.water + 1);
     saveState(state);
     renderWater();
-    toast(state.water === state.targets.water ? "Eight cups. Hydration target hit." : "One cup added.");
+    toast(state.water === state.targets.water ? "Ocho vasos. Objetivo de hidratación cumplido." : "Un vaso añadido.");
   });
   $("#waterMinus").addEventListener("click", () => {
     state.water = Math.max(0, state.water - 1);
@@ -1045,7 +1050,7 @@ function bindEvents() {
   });
 
   $("#adjustTargetBtn").addEventListener("click", () => {
-    toast("Target changes are coach-managed in Phase 1.");
+    toast("Los cambios de objetivo los gestiona la entrenadora en la Fase 1.");
   });
 
   // owner review
@@ -1053,9 +1058,9 @@ function bindEvents() {
     const sql = $("#viewSql").textContent;
     try {
       await navigator.clipboard.writeText(sql);
-      toast("SQL copied.");
+      toast("SQL copiado.");
     } catch {
-      toast("Select the SQL and copy it manually.");
+      toast("Selecciona el SQL y cópialo manualmente.");
     }
   });
 
@@ -1076,10 +1081,10 @@ async function installApp() {
     ui.deferredInstall.prompt();
     const choice = await ui.deferredInstall.userChoice;
     ui.deferredInstall = null;
-    if (choice.outcome === "accepted") toast("Fit Code added to your home screen.");
+    if (choice.outcome === "accepted") toast("Fit Code añadido a tu pantalla de inicio.");
     return;
   }
-  toast("On iPhone: Share, then Add to Home Screen. On Android: menu, then Install app.");
+  toast("En iPhone: Compartir y luego Añadir a pantalla de inicio. En Android: menú y luego Instalar app.");
 }
 
 /* ------------------------------------------------------------------ */
@@ -1122,8 +1127,8 @@ select
 from public.profiles p
 left join public.streaks s on s.member_id = p.id;
 
--- Owner reads this in the Supabase dashboard (service role).
--- Members get their own rows through security_invoker + RLS.`;
+-- El dueño lee esto en el panel de Supabase (rol de servicio).
+-- Los miembros ven sus propias filas con security_invoker + RLS.`;
 
 /* ------------------------------------------------------------------ */
 /* boot                                                                */

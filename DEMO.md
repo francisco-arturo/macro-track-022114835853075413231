@@ -1,73 +1,76 @@
-# Fit Code Nutrition — demo
+# Fit Code Nutrición — demo
 
-## Run
+## Ejecutar
 
 ```powershell
 node dev-server.mjs
 ```
 
-**Live URL: https://macro-track-022114835853075413231.vercel.app**
+**URL en vivo: https://macro-track-022114835853075413231.vercel.app**
 
-Local review URL: **http://127.0.0.1:4174**
+URL local de revisión: **http://127.0.0.1:4174**
 
-Port 4173 was already held by another prototype on this machine, so the preview was started with
-`$env:PORT=4174; node dev-server.mjs`. The server binds `127.0.0.1`. Stop it with `Ctrl+C` in the
-terminal running the job.
+El puerto 4173 ya estaba ocupado por otro prototipo en esta máquina, así que la vista previa se
+inició con `$env:PORT=4174; node dev-server.mjs`. El servidor escucha en `127.0.0.1`. Detenlo con
+`Ctrl+C` en la terminal que ejecuta el proceso.
 
-The live deployment was verified on 2026-10-27: `/`, `/styles.css`, `/app.js`, `/data.js`,
-`/manifest.webmanifest`, `/sw.js` and `/icons/icon-192.png` all return 200, and a live
-`POST /api/meal-plan` returns 200 with a three-day plan and `1/3` usage. Deployment id:
-`dpl_H1HQJP56bTJMy9DNaGwD2NcynNSH`.
+El despliegue en vivo en español se verificó el 2026-10-27: `/`, `/styles.css`, `/app.js`, `/data.js`,
+`/manifest.webmanifest`, `/sw.js` y `/icons/icon-192.png` devuelven 200, el HTML declara `lang="es"`,
+y un `POST /api/meal-plan` en vivo devuelve 200 con un plan de tres días (`Día 1`) y uso `1/3`. ID del
+despliegue: `dpl_4wtgcTMqBXpJzepqkgFMvq4bgWvT`.
 
-## The path to walk
+## Recorrido de 60 segundos
 
-1. **Today.** The app opens signed in as Maya Chen. The seeded day is 1,329 kcal, 124g protein and an
-   11-day streak. Point at the calorie ring, the protein bar (the priority macro) and the planned
-   dinner.
-2. **Log food.** Tap any **Log food** button. Pick **Grilled chicken**. Switch the portion control to
-   **Hand portions**: one palm equals four ounces. Set it to two palms, choose **Dinner**, add it.
-   The ring, all three macro bars, the meal list and the hero copy update.
-3. **Meal plan.** Go to **Meal plan**. Change the goal or block length and press **Generate plan**.
-   The card shows the server route being called, then the plan and the remaining generations. The
-   dropdowns are allow-listed on the server, and the function never returns the API key.
-4. **Progress.** The 8-week weight trend, 7-day protein bars and 14-day logging calendar are seeded.
-   Press **Log weight**, enter 147.9 and save; the latest weight and trend update.
-5. **Owner review.** Use the chip in the top bar. This is the `member_summary` view the owner will
-   open in Supabase: name, days since last log, streak, 7-day protein against target, latest weight.
-   The SQL preview and the RLS notes are below the table.
-6. **Account.** Open the avatar. Export the member's JSON, try **Install on this device**, or use the
-   two-step **Delete account** flow. Deletion clears the local records and shows the deleted state;
-   **Restore the demo** brings the seed back.
+1. **Hoy.** La app abre con la sesión de Maya Chen. El día precargado tiene 1,329 kcal, 124 g de
+   proteína y una racha de 11 días. Señala el anillo de calorías, la barra de proteína (el macro
+   prioritario) y la cena planificada.
+2. **Registrar comida.** Toca **Registrar comida**. Elige **Pollo a la parrilla**. Cambia la porción a
+   **Porciones con la mano**: una palma equivale a cuatro onzas. Pon dos palmas, elige **Cena** y
+   añade. El anillo, las tres barras de macros, la lista de comidas y el texto del inicio se
+   actualizan.
+3. **Plan de comidas.** Ve a **Plan de comidas**. Cambia el objetivo o la duración y pulsa **Generar
+   plan**. La tarjeta muestra la llamada al servidor, el plan nuevo y las generaciones restantes. Los
+   desplegables están en listas permitidas y la función nunca devuelve la clave de API.
+4. **Progreso.** La tendencia de peso de 8 semanas, las barras de proteína de 7 días y el calendario
+   de 14 días vienen precargados. Pulsa **Registrar peso**, escribe 147.9 y guarda; el peso y la
+   tendencia se actualizan.
+5. **Vista del dueño.** Usa el botón del encabezado. Es la vista `member_summary` que el dueño abrirá
+   en Supabase: nombre, días sin registro, racha, proteína de 7 días contra el objetivo y último peso.
+   Debajo están el SQL y las notas de RLS.
+6. **Cuenta.** Abre el avatar. Exporta el JSON del miembro, prueba **Instalar en este dispositivo** o
+   usa el flujo de **Eliminar cuenta** en dos pasos. La eliminación borra los registros locales y
+   muestra el estado de cuenta eliminada; **Restaurar la demo** recupera los datos precargados.
 
-## What is deliberately fake
+## Qué es deliberadamente falso
 
-- **Auth is a seeded session.** The app opens without a login wall so the member flow can be judged
-  in one minute. Real Supabase Auth, password reset and Google are Phase 1 build work, not demo work.
-- **Data is in `localStorage`.** There is no Supabase project in this prototype. The schema, RLS and
-  view are documented and previewed, not connected.
-- **Owner rows are seeded.** Maya's row is computed from the live local state; the other five members
-  are sample data. Phase 1 has no admin page: the owner reads the view in the Supabase dashboard.
-- **AI falls back to a deterministic plan.** Without `ANTHROPIC_API_KEY`, the server route still
-  validates, meters and returns a complete three-day plan. With the key set, the same route calls
-  Anthropic and validates the JSON before returning it. The key is read only in
-  `api/meal-plan.mjs`.
-- **The usage limit is per warm function instance.** It proves the gate and the UX. Production moves
-  the counter to Postgres so a cold start cannot reset it.
-- **PWA install is real on HTTPS.** On localhost the manifest and service worker are active; a
-  home-screen install behaves as it will on Vercel.
+- **La autenticación es una sesión precargada.** La app abre sin pantalla de login para que el flujo
+  del miembro se pueda juzgar en un minuto. Supabase Auth, la recuperación de contraseña y Google son
+  trabajo de la Fase 1, no de esta demo.
+- **Los datos están en `localStorage`.** No hay un proyecto de Supabase conectado en este prototipo.
+  El esquema, las políticas RLS y la vista están documentados y se muestran, pero no conectados.
+- **Las filas del dueño son de ejemplo.** La fila de Maya se calcula con el estado local; los otros
+  cinco miembros son datos de muestra. La Fase 1 no tiene página de administración: el dueño lee la
+  vista en el panel de Supabase.
+- **La IA cae en un plan determinista.** Sin `ANTHROPIC_API_KEY`, la ruta del servidor sigue validando,
+  midiendo y devolviendo un plan completo de tres días. Con la clave, la misma ruta llama a Anthropic y
+  valida el JSON antes de responder. La clave se lee solo en `api/meal-plan.mjs`.
+- **El límite de uso es por instancia de función.** Demuestra la barrera y la experiencia. En
+  producción el contador vive en Postgres para que un arranque en frío no lo reinicie.
+- **La instalación PWA es real en HTTPS.** En localhost el manifiesto y el service worker están
+  activos; en Vercel la instalación en pantalla de inicio se comporta como en producción.
 
-## What the client should judge
+## Qué debe juzgar el cliente
 
-- Whether ounce and hand-portion logging feels faster than the prototype.
-- Whether the macro hierarchy is obvious without reading a number.
-- Whether the owner table answers "who needs a check-in?" at a glance.
-- Whether the plan output is specific enough to cook from.
-- Whether the iPhone layout, safe areas and bottom nav feel like an app, not a website.
+- Si registrar por onzas y porciones con la mano se siente más rápido que el prototipo anterior.
+- Si la jerarquía de macros se entiende sin leer un número.
+- Si la tabla del dueño responde "quién necesita seguimiento" de un vistazo.
+- Si el plan es lo bastante concreto para cocinar.
+- Si el diseño de iPhone, las áreas seguras y la navegación inferior se sienten como una app.
 
-## Production gaps not hidden by the demo
+## Brechas de producción que la demo no esconde
 
-- Supabase schema migrations, RLS policies and tests.
-- Real auth, session refresh, password reset delivery and Google provider.
-- Server-side export and deletion tied to `auth.uid()`.
-- Persistent `ai_usage` and atomic limit enforcement.
-- Supabase view verification in the dashboard under the owner account.
+- Migraciones de esquema, políticas RLS y pruebas en Supabase.
+- Autenticación real, refresco de sesión, recuperación de contraseña y proveedor de Google.
+- Exportación y eliminación del lado del servidor atadas a `auth.uid()`.
+- `ai_usage` persistente y aplicación atómica del límite.
+- Verificación de la vista de Supabase en el panel con la cuenta del dueño.

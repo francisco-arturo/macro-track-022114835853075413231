@@ -1,7 +1,8 @@
 {
-  "name": "Fit Code Nutrition",
+  "name": "Fit Code Nutrición",
   "short_name": "Fit Code",
-  "description": "Track macros, log meals and get a plan built around your training.",
+  "description": "Controla tus macros, registra comidas y recibe un plan pensado para tu entrenamiento.",
+  "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -37,13 +38,13 @@
   ],
   "shortcuts": [
     {
-      "name": "Log food",
-      "short_name": "Log food",
+      "name": "Registrar comida",
+      "short_name": "Registrar",
       "url": "./?action=log",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Meal plan",
+      "name": "Plan de comidas",
       "short_name": "Plan",
       "url": "./?view=plan",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]

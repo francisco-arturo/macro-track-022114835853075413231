@@ -1,4 +1,4 @@
-const CACHE = "fit-code-v1";
+const CACHE = "fit-code-es-v2";
 const CORE = [
   "./",
   "./index.html",

@@ -1,7 +1,7 @@
 import { DEMO_PLAN } from "../data.js";
 
-const ALLOWED_GOALS = new Set(["Strength cut", "Maintenance", "Lean build"]);
-const ALLOWED_DIETS = new Set(["High protein", "Mostly plants", "Dairy free"]);
+const ALLOWED_GOALS = new Set(["Definición", "Mantenimiento", "Ganancia magra"]);
+const ALLOWED_DIETS = new Set(["Alta proteína", "Basado en plantas", "Sin lácteos"]);
 const DEFAULT_LIMIT = 3;
 const MAX_BODY_BYTES = 32 * 1024;
 
@@ -66,17 +66,17 @@ function clampNumber(value, fallback, min, max) {
 
 function buildDemoPlan({ goal, days, diet, targets }) {
   const plan = structuredClone(DEMO_PLAN);
-  plan.title = `${days}-day ${goal.toLowerCase()} block`;
-  plan.subtitle = `${diet} · built around ${targets.calories.toLocaleString("en-US")} kcal and ${
+  plan.title = `${days} días de ${goal.toLowerCase()}`;
+  plan.subtitle = `${diet} · ajustado a ${targets.calories.toLocaleString("es-US")} kcal y ${
     targets.protein
-  }g protein`;
+  } g de proteína`;
   plan.source = "demo";
   const baseDays = structuredClone(DEMO_PLAN.days);
   plan.days = Array.from({ length: days }, (_, index) => {
     const base = baseDays[index % baseDays.length];
     return {
       ...base,
-      label: `Day ${index + 1}`,
+      label: `Día ${index + 1}`,
       meals: base.meals.map((meal) => ({ ...meal })),
     };
   });
@@ -88,12 +88,12 @@ function validateGeneratedPlan(plan, days) {
   const cleanDays = plan.days.slice(0, days).map((day, index) => {
     if (!day || !Array.isArray(day.meals) || day.meals.length < 3) return null;
     return {
-      label: cleanString(day.label, `Day ${index + 1}`, 20),
-      focus: cleanString(day.focus, "Training day", 40),
+      label: cleanString(day.label, `Día ${index + 1}`, 20),
+      focus: cleanString(day.focus, "Día de entrenamiento", 40),
       meals: day.meals.slice(0, 6).map((meal) => ({
-        slot: cleanString(meal.slot, "Meal", 20),
-        name: cleanString(meal.name, "Training meal", 80),
-        description: cleanString(meal.description, "Built around your target", 120),
+        slot: cleanString(meal.slot, "Comida", 20),
+        name: cleanString(meal.name, "Comida de entrenamiento", 80),
+        description: cleanString(meal.description, "Ajustada a tu objetivo", 120),
         kcal: clampNumber(meal.kcal, 500, 150, 1400),
         protein: clampNumber(meal.protein, 30, 0, 120),
         carbs: clampNumber(meal.carbs, 40, 0, 180),
@@ -104,12 +104,12 @@ function validateGeneratedPlan(plan, days) {
   if (cleanDays.some((day) => day === null)) return null;
   return {
     id: `plan_${Date.now()}`,
-    title: cleanString(plan.title, `${days}-day strength block`, 80),
-    subtitle: cleanString(plan.subtitle, "Built around your target", 120),
+    title: cleanString(plan.title, `${days} días de fuerza`, 80),
+    subtitle: cleanString(plan.subtitle, "Ajustado a tu objetivo", 120),
     source: "anthropic",
     days: cleanDays,
     grocery: Array.isArray(plan.grocery)
-      ? plan.grocery.slice(0, 30).map((item) => cleanString(item, "Staples", 80))
+      ? plan.grocery.slice(0, 30).map((item) => cleanString(item, "Básicos", 80))
       : DEMO_PLAN.grocery,
   };
 }
@@ -118,28 +118,28 @@ async function callAnthropic(input) {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return null;
 
-  const prompt = `Build a ${input.days}-day meal plan for a strength-training gym member.
-Goal: ${input.goal}
-Food style: ${input.diet}
-Daily targets: ${input.targets.calories} kcal, ${input.targets.protein}g protein, ${input.targets.carbs}g carbs, ${input.targets.fat}g fat.
-Member first name: ${input.member}.
+  const prompt = `Crea un plan de comidas de ${input.days} días para un miembro de un gimnasio de fuerza y acondicionamiento.
+Objetivo: ${input.goal}
+Estilo de comida: ${input.diet}
+Objetivos diarios: ${input.targets.calories} kcal, ${input.targets.protein} g de proteína, ${input.targets.carbs} g de carbohidratos, ${input.targets.fat} g de grasa.
+Nombre del miembro: ${input.member}.
 
-Return ONLY valid JSON with this exact shape:
+Devuelve SOLO JSON válido con esta forma exacta:
 {
-  "title": "short plan title",
-  "subtitle": "one line describing the target",
+  "title": "título corto del plan",
+  "subtitle": "una línea que describa el objetivo",
   "days": [
     {
-      "label": "Day 1",
-      "focus": "Lower strength",
+      "label": "Día 1",
+      "focus": "Fuerza inferior",
       "meals": [
-        {"slot":"Breakfast","name":"...","description":"...","kcal":520,"protein":42,"carbs":60,"fat":14}
+        {"slot":"Desayuno","name":"...","description":"...","kcal":520,"protein":42,"carbs":60,"fat":14}
       ]
     }
   ],
-  "grocery": ["item with quantity"]
+  "grocery": ["artículo con cantidad"]
 }
-Rules: four meals per day (Breakfast, Lunch, Snack, Dinner). Each day lands within 150 kcal of the calorie target and within 15g of the protein target. Food must be practical, mostly whole foods, and consistent with the food style. Use no markdown, no code fences, and no commentary.`;
+Escribe todo el contenido visible en español neutro, apto para Estados Unidos. Reglas: cuatro comidas por día (Desayuno, Almuerzo, Merienda, Cena). Cada día debe quedar a menos de 150 kcal del objetivo calórico y a menos de 15 g del objetivo de proteína. La comida debe ser práctica, basada en alimentos reales y coherente con el estilo elegido. Sin markdown, sin bloques de código y sin comentarios.`;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -153,7 +153,7 @@ Rules: four meals per day (Breakfast, Lunch, Snack, Dinner). Each day lands with
       max_tokens: 2600,
       temperature: 0.5,
       system:
-        "You are a performance nutrition coach for a strength and conditioning gym. You write practical meal plans and return strict JSON only.",
+        "Eres un entrenador de nutrición de un gimnasio de fuerza y acondicionamiento. Escribes planes de comidas prácticos y devuelves solo JSON estricto, con todo el texto visible en español.",
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -177,19 +177,19 @@ async function handler(req, res) {
     return;
   }
   if (req.method !== "POST") {
-    json(res, 405, { error: "Method not allowed" }, { Allow: "POST" });
+    json(res, 405, { error: "Método no permitido" }, { Allow: "POST" });
     return;
   }
 
   const memberId = cleanString(req.headers?.["x-member-id"], "", 64);
   if (!/^[a-zA-Z0-9_-]{3,64}$/.test(memberId)) {
-    json(res, 401, { error: "A valid member id is required." });
+    json(res, 401, { error: "Se requiere un id de miembro válido." });
     return;
   }
 
   const before = usageFor(memberId);
   if (before.remaining <= 0) {
-    json(res, 429, { error: "Daily AI limit reached.", usage: before }, { "X-AI-Remaining": "0" });
+    json(res, 429, { error: "Límite diario de IA alcanzado.", usage: before }, { "X-AI-Remaining": "0" });
     return;
   }
 
@@ -197,16 +197,16 @@ async function handler(req, res) {
   try {
     body = await readJson(req);
   } catch {
-    json(res, 400, { error: "Send a JSON body." });
+    json(res, 400, { error: "Envía un cuerpo JSON." });
     return;
   }
 
   if (!ALLOWED_GOALS.has(body.goal)) {
-    json(res, 400, { error: "Unsupported goal." });
+    json(res, 400, { error: "Objetivo no admitido." });
     return;
   }
   if (!ALLOWED_DIETS.has(body.diet)) {
-    json(res, 400, { error: "Unsupported food style." });
+    json(res, 400, { error: "Estilo de comida no admitido." });
     return;
   }
 
@@ -214,7 +214,7 @@ async function handler(req, res) {
     goal: body.goal,
     diet: body.diet,
     days: clampNumber(body.days, 3, 3, 5),
-    member: cleanString(body.member?.name, "Member", 30),
+    member: cleanString(body.member?.name, "Miembro", 30),
     targets: {
       calories: clampNumber(body.targets?.calories, 2150, 1200, 5000),
       protein: clampNumber(body.targets?.protein, 165, 60, 300),

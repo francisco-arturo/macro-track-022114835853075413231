@@ -39,6 +39,7 @@ async function main() {
 
   const manifest = JSON.parse(await readFile("manifest.webmanifest", "utf8"));
   check("manifest is standalone", manifest.display === "standalone");
+  check("manifest is Spanish", manifest.lang === "es");
   check("manifest has 192 icon", manifest.icons.some((icon) => icon.sizes === "192x192"));
   check("manifest has maskable icon", manifest.icons.some((icon) => icon.purpose === "maskable"));
 
@@ -47,12 +48,14 @@ async function main() {
   check("HTML loads module app", html.includes('type="module"'));
   check("HTML has bottom navigation", html.includes("bottom-nav"));
   check("HTML declares manifest", html.includes("manifest.webmanifest"));
+  check("HTML is Spanish", html.includes("Registrar comida"));
 
   const app = await readFile("app.js", "utf8");
   check("app includes quick log flow", app.includes("addFoodToLog"));
   check("app calls server AI endpoint", app.includes('fetch("/api/meal-plan"'));
   check("app includes export flow", app.includes("exportData"));
   check("app includes delete flow", app.includes("deleteAccount"));
+  check("app is Spanish", app.includes("Buenos días"));
   check("SQL view uses security_invoker", app.includes("security_invoker = true"));
   check("no Anthropic key in browser code", !/sk-ant-|ANTHROPIC_API_KEY/.test(app));
 
@@ -83,11 +86,11 @@ async function main() {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-member-id": member },
         body: JSON.stringify({
-          goal: "Strength cut",
+          goal: "Definición",
           days: 3,
-          diet: "High protein",
+          diet: "Alta proteína",
           targets: { calories: 2150, protein: 165, carbs: 210, fat: 62 },
-          member: { name: "Verify" },
+          member: { name: "Verificación" },
         }),
       });
 
@@ -95,6 +98,7 @@ async function main() {
     const payload = await first.json();
     check("AI endpoint returns 200", first.status === 200, String(first.status));
     check("AI endpoint returns three days", payload.plan?.days?.length === 3);
+    check("AI plan is Spanish", payload.plan?.days?.[0]?.label?.includes("Día"));
     check("AI plan has four meals per day", payload.plan?.days?.every((day) => day.meals.length === 4));
     check("AI endpoint reports usage", payload.usage?.limit === 3 && payload.usage?.used === 1);
     check("AI endpoint does not return a key", !JSON.stringify(payload).includes("sk-ant-"));
@@ -109,14 +113,14 @@ async function main() {
     const bad = await fetch(`${base}/api/meal-plan`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-member-id": "verify-bad-goal" },
-      body: JSON.stringify({ goal: "Eat everything", days: 3, diet: "High protein" }),
+      body: JSON.stringify({ goal: "Cómete todo", days: 3, diet: "Alta proteína" }),
     });
     check("AI endpoint rejects unknown goals", bad.status === 400, String(bad.status));
 
     const noMember = await fetch(`${base}/api/meal-plan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ goal: "Strength cut", days: 3, diet: "High protein" }),
+      body: JSON.stringify({ goal: "Definición", days: 3, diet: "Alta proteína" }),
     });
     check("AI endpoint requires a member id", noMember.status === 401, String(noMember.status));
   } finally {

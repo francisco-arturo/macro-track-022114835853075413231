@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Fit Code member nutrition app prototype: macro targets, meal logging, AI meal plans and a Supabase review view.",
+  "description": "Prototipo en español de la app de nutrición para miembros de Fit Code: objetivos de macros, registro de comidas, planes con IA y vista de revisión en Supabase.",
   "scripts": {
     "dev": "node dev-server.mjs",
     "check": "node verify.mjs"

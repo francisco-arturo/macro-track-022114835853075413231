@@ -1,4 +1,4 @@
-const STORAGE_KEY = "fitcode.macro-track.v1";
+const STORAGE_KEY = "fitcode.macro-track.es.v1";
 const MS_DAY = 86400000;
 
 export const TARGETS = {
@@ -17,18 +17,19 @@ export const MEMBER = {
   initials: "MC",
   role: "member",
   location: "Lincoln Park",
-  memberSince: "September 2026",
+  memberSince: "Septiembre 2026",
   coach: "Elena Ruiz",
-  goal: "Recomp",
+  goal: "Recomposición",
 };
 
 export const FOODS = [
   {
     id: "greek-yogurt-bowl",
-    name: "Greek yogurt bowl",
-    detail: "Yogurt, blueberries, granola",
+    name: "Bol de yogur griego",
+    detail: "Yogur, arándanos, granola",
     servingOz: 8,
-    handLabel: "1 cupped hand",
+    handLabel: "1 mano ahuecada",
+    handPlural: "manos ahuecadas",
     handOz: 6,
     kcal: 310,
     protein: 24,
@@ -39,10 +40,11 @@ export const FOODS = [
   },
   {
     id: "grilled-chicken",
-    name: "Grilled chicken",
-    detail: "Seasoned breast, grilled",
+    name: "Pollo a la parrilla",
+    detail: "Pechuga sazonada, a la parrilla",
     servingOz: 4,
-    handLabel: "1 palm",
+    handLabel: "1 palma",
+    handPlural: "palmas",
     handOz: 4,
     kcal: 187,
     protein: 35,
@@ -53,10 +55,11 @@ export const FOODS = [
   },
   {
     id: "jasmine-rice",
-    name: "Jasmine rice",
-    detail: "Cooked, lightly salted",
+    name: "Arroz jazmín",
+    detail: "Cocido, con un poco de sal",
     servingOz: 6,
-    handLabel: "1 fist",
+    handLabel: "1 puño",
+    handPlural: "puños",
     handOz: 6,
     kcal: 220,
     protein: 4,
@@ -67,10 +70,11 @@ export const FOODS = [
   },
   {
     id: "salmon",
-    name: "Roasted salmon",
-    detail: "Center-cut fillet",
+    name: "Salmón al horno",
+    detail: "Filete central",
     servingOz: 5,
-    handLabel: "1 palm",
+    handLabel: "1 palma",
+    handPlural: "palmas",
     handOz: 5,
     kcal: 280,
     protein: 34,
@@ -81,10 +85,11 @@ export const FOODS = [
   },
   {
     id: "sweet-potato",
-    name: "Roasted sweet potato",
-    detail: "Olive oil, flaky salt",
+    name: "Batata al horno",
+    detail: "Aceite de oliva, sal en escamas",
     servingOz: 5,
-    handLabel: "1 fist",
+    handLabel: "1 puño",
+    handPlural: "puños",
     handOz: 5,
     kcal: 160,
     protein: 3,
@@ -95,10 +100,11 @@ export const FOODS = [
   },
   {
     id: "protein-shake",
-    name: "Whey protein shake",
-    detail: "Two scoops, water",
+    name: "Batido de proteína",
+    detail: "Dos scoops, con agua",
     servingOz: 12,
-    handLabel: "1 shaker",
+    handLabel: "1 batido",
+    handPlural: "batidos",
     handOz: 12,
     kcal: 170,
     protein: 30,
@@ -109,10 +115,11 @@ export const FOODS = [
   },
   {
     id: "cottage-cheese",
-    name: "Cottage cheese",
-    detail: "Low-fat, black pepper",
+    name: "Requesón",
+    detail: "Bajo en grasa, con pimienta",
     servingOz: 6,
-    handLabel: "1 cupped hand",
+    handLabel: "1 mano ahuecada",
+    handPlural: "manos ahuecadas",
     handOz: 6,
     kcal: 180,
     protein: 22,
@@ -123,10 +130,11 @@ export const FOODS = [
   },
   {
     id: "apple",
-    name: "Honeycrisp apple",
-    detail: "One medium apple",
+    name: "Manzana Honeycrisp",
+    detail: "Una manzana mediana",
     servingOz: 3,
-    handLabel: "1 fist",
+    handLabel: "1 puño",
+    handPlural: "puños",
     handOz: 3,
     kcal: 95,
     protein: 0,
@@ -137,10 +145,11 @@ export const FOODS = [
   },
   {
     id: "eggs",
-    name: "Whole eggs",
-    detail: "Three eggs, scrambled",
+    name: "Huevos enteros",
+    detail: "Tres huevos revueltos",
     servingOz: 3,
-    handLabel: "1 palm",
+    handLabel: "1 palma",
+    handPlural: "palmas",
     handOz: 3,
     kcal: 210,
     protein: 18,
@@ -151,10 +160,11 @@ export const FOODS = [
   },
   {
     id: "almonds",
-    name: "Almonds",
-    detail: "Dry roasted, unsalted",
+    name: "Almendras",
+    detail: "Tostadas, sin sal",
     servingOz: 1,
-    handLabel: "1 thumb",
+    handLabel: "1 pulgar",
+    handPlural: "pulgares",
     handOz: 1,
     kcal: 164,
     protein: 6,
@@ -165,10 +175,11 @@ export const FOODS = [
   },
   {
     id: "olive-oil",
-    name: "Olive oil",
-    detail: "Extra virgin",
+    name: "Aceite de oliva",
+    detail: "Virgen extra",
     servingOz: 0.5,
-    handLabel: "1 thumb",
+    handLabel: "1 pulgar",
+    handPlural: "pulgares",
     handOz: 0.5,
     kcal: 120,
     protein: 0,
@@ -179,10 +190,11 @@ export const FOODS = [
   },
   {
     id: "sourdough",
-    name: "Sourdough toast",
-    detail: "One thick slice",
+    name: "Tostada de masa madre",
+    detail: "Una rebanada gruesa",
     servingOz: 2,
-    handLabel: "1 fist",
+    handLabel: "1 puño",
+    handPlural: "puños",
     handOz: 2,
     kcal: 140,
     protein: 5,
@@ -248,40 +260,40 @@ export const SUMMARY_MEMBERS = [
 
 const PLAN_DAYS = [
   {
-    label: "Day 1",
-    focus: "Lower strength",
+    label: "Día 1",
+    focus: "Fuerza inferior",
     meals: [
       {
-        slot: "Breakfast",
-        name: "Steel-cut oats + whey",
-        description: "Oats, whey, blueberries, almond butter",
+        slot: "Desayuno",
+        name: "Avena con proteína",
+        description: "Avena, proteína, arándanos, mantequilla de almendra",
         kcal: 520,
         protein: 42,
         carbs: 62,
         fat: 12,
       },
       {
-        slot: "Lunch",
-        name: "Chicken rice bowl",
-        description: "Chicken, jasmine rice, cucumber, chili crunch",
+        slot: "Almuerzo",
+        name: "Bol de pollo y arroz",
+        description: "Pollo, arroz jazmín, pepino, chili crujiente",
         kcal: 610,
         protein: 48,
         carbs: 64,
         fat: 16,
       },
       {
-        slot: "Snack",
-        name: "Cottage cheese + pineapple",
-        description: "Cottage cheese, pineapple, cinnamon",
+        slot: "Merienda",
+        name: "Requesón con piña",
+        description: "Requesón, piña, canela",
         kcal: 210,
         protein: 24,
         carbs: 16,
         fat: 4,
       },
       {
-        slot: "Dinner",
-        name: "Sheet-pan salmon",
-        description: "Salmon, baby potatoes, broccolini, lemon",
+        slot: "Cena",
+        name: "Salmón al horno",
+        description: "Salmón, papas pequeñas, brócoli, limón",
         kcal: 720,
         protein: 48,
         carbs: 58,
@@ -290,40 +302,40 @@ const PLAN_DAYS = [
     ],
   },
   {
-    label: "Day 2",
-    focus: "Upper strength",
+    label: "Día 2",
+    focus: "Fuerza superior",
     meals: [
       {
-        slot: "Breakfast",
-        name: "Eggs + sourdough",
-        description: "Three eggs, sourdough, avocado, tomato",
+        slot: "Desayuno",
+        name: "Huevos con masa madre",
+        description: "Tres huevos, masa madre, aguacate, tomate",
         kcal: 480,
         protein: 32,
         carbs: 34,
         fat: 22,
       },
       {
-        slot: "Lunch",
-        name: "Turkey smash wrap",
-        description: "Turkey, Greek yogurt slaw, spinach, tortilla",
+        slot: "Almuerzo",
+        name: "Wrap de pavo",
+        description: "Pavo, col con yogur griego, espinaca, tortilla",
         kcal: 560,
         protein: 44,
         carbs: 52,
         fat: 18,
       },
       {
-        slot: "Snack",
-        name: "Shake + banana",
-        description: "Whey, banana, oat milk",
+        slot: "Merienda",
+        name: "Batido con plátano",
+        description: "Proteína, plátano, leche de avena",
         kcal: 300,
         protein: 32,
         carbs: 36,
         fat: 4,
       },
       {
-        slot: "Dinner",
-        name: "Steak + sweet potato",
-        description: "Flank steak, roasted sweet potato, green beans",
+        slot: "Cena",
+        name: "Bistec con batata",
+        description: "Bistec de falda, batata asada, judías verdes",
         kcal: 700,
         protein: 52,
         carbs: 55,
@@ -332,40 +344,40 @@ const PLAN_DAYS = [
     ],
   },
   {
-    label: "Day 3",
-    focus: "Conditioning",
+    label: "Día 3",
+    focus: "Acondicionamiento",
     meals: [
       {
-        slot: "Breakfast",
-        name: "Greek yogurt crunch",
-        description: "Greek yogurt, berries, granola, honey",
+        slot: "Desayuno",
+        name: "Yogur griego crujiente",
+        description: "Yogur griego, frutos rojos, granola, miel",
         kcal: 450,
         protein: 38,
         carbs: 48,
         fat: 10,
       },
       {
-        slot: "Lunch",
-        name: "Salmon grain bowl",
-        description: "Salmon, farro, greens, lemon-tahini",
+        slot: "Almuerzo",
+        name: "Bol de salmón y granos",
+        description: "Salmón, farro, verduras, tahini y limón",
         kcal: 640,
         protein: 42,
         carbs: 60,
         fat: 24,
       },
       {
-        slot: "Snack",
-        name: "Jerky + apple",
-        description: "Turkey jerky, honeycrisp apple",
+        slot: "Merienda",
+        name: "Cecina con manzana",
+        description: "Cecina de pavo, manzana Honeycrisp",
         kcal: 230,
         protein: 24,
         carbs: 22,
         fat: 4,
       },
       {
-        slot: "Dinner",
-        name: "Chicken pesto pasta",
-        description: "Chicken, rigatoni, pesto, cherry tomatoes",
+        slot: "Cena",
+        name: "Pasta con pollo y pesto",
+        description: "Pollo, rigatoni, pesto, tomates cherry",
         kcal: 740,
         protein: 52,
         carbs: 72,
@@ -377,27 +389,27 @@ const PLAN_DAYS = [
 
 export const DEMO_PLAN = {
   id: "plan_strength_3",
-  title: "3-day strength block",
-  subtitle: "Built around 2,150 kcal and 165g protein",
+  title: "Bloque de fuerza de 3 días",
+  subtitle: "Ajustado a 2,150 kcal y 165 g de proteína",
   source: "demo",
   days: PLAN_DAYS,
   grocery: [
-    "Chicken breast, 2 lb",
-    "Salmon, 1.5 lb",
-    "Flank steak, 1 lb",
-    "Eggs, 12",
-    "Greek yogurt, 32 oz",
-    "Cottage cheese, 16 oz",
-    "Whey protein",
-    "Steel-cut oats",
-    "Jasmine rice",
-    "Sweet potatoes, 2",
-    "Blueberries + pineapple",
-    "Sourdough + tortillas",
-    "Broccolini + green beans",
-    "Avocado + bananas",
-    "Olive oil + almond butter",
-    "Pesto + lemon-tahini",
+    "Pechuga de pollo, 1 kg",
+    "Salmón, 700 g",
+    "Bistec de falda, 500 g",
+    "Huevos, 12",
+    "Yogur griego, 900 g",
+    "Requesón, 450 g",
+    "Proteína de suero",
+    "Avena",
+    "Arroz jazmín",
+    "Batatas, 2",
+    "Arándanos y piña",
+    "Masa madre y tortillas",
+    "Brócoli y judías verdes",
+    "Aguacate y plátanos",
+    "Aceite de oliva y mantequilla de almendra",
+    "Pesto, tahini y limón",
   ],
 };
 
@@ -441,11 +453,11 @@ function seedLogs() {
   return [
     {
       id: "log_seed_1",
-      meal: "Breakfast",
-      time: "7:35 AM",
+      meal: "Desayuno",
+      time: "7:35",
       foodId: "greek-yogurt-bowl",
-      name: "Greek yogurt bowl",
-      detail: "Yogurt, blueberries, granola",
+      name: "Bol de yogur griego",
+      detail: "Yogur, arándanos, granola",
       amountLabel: "8 oz",
       kcal: 310,
       protein: 24,
@@ -456,11 +468,11 @@ function seedLogs() {
     },
     {
       id: "log_seed_2",
-      meal: "Lunch",
-      time: "12:20 PM",
+      meal: "Almuerzo",
+      time: "12:20",
       foodId: "grilled-chicken",
-      name: "Grilled chicken",
-      detail: "Seasoned breast, grilled",
+      name: "Pollo a la parrilla",
+      detail: "Pechuga sazonada, a la parrilla",
       amountLabel: "5 oz",
       kcal: 234,
       protein: 44,
@@ -471,11 +483,11 @@ function seedLogs() {
     },
     {
       id: "log_seed_3",
-      meal: "Lunch",
-      time: "12:20 PM",
+      meal: "Almuerzo",
+      time: "12:20",
       foodId: "jasmine-rice",
-      name: "Jasmine rice",
-      detail: "Cooked, lightly salted",
+      name: "Arroz jazmín",
+      detail: "Cocido, con un poco de sal",
       amountLabel: "6 oz",
       kcal: 220,
       protein: 4,
@@ -486,11 +498,11 @@ function seedLogs() {
     },
     {
       id: "log_seed_4",
-      meal: "Lunch",
-      time: "12:20 PM",
+      meal: "Almuerzo",
+      time: "12:20",
       foodId: "olive-oil",
-      name: "Olive oil",
-      detail: "Extra virgin",
+      name: "Aceite de oliva",
+      detail: "Virgen extra",
       amountLabel: "0.5 oz",
       kcal: 120,
       protein: 0,
@@ -501,11 +513,11 @@ function seedLogs() {
     },
     {
       id: "log_seed_5",
-      meal: "Snacks",
-      time: "3:05 PM",
+      meal: "Meriendas",
+      time: "15:05",
       foodId: "protein-shake",
-      name: "Whey protein shake",
-      detail: "Two scoops, water",
+      name: "Batido de proteína",
+      detail: "Dos scoops, con agua",
       amountLabel: "12 oz",
       kcal: 170,
       protein: 30,
@@ -516,11 +528,11 @@ function seedLogs() {
     },
     {
       id: "log_seed_6",
-      meal: "Snacks",
-      time: "3:05 PM",
+      meal: "Meriendas",
+      time: "15:05",
       foodId: "apple",
-      name: "Honeycrisp apple",
-      detail: "One medium apple",
+      name: "Manzana Honeycrisp",
+      detail: "Una manzana mediana",
       amountLabel: "3 oz",
       kcal: 95,
       protein: 0,
@@ -531,11 +543,11 @@ function seedLogs() {
     },
     {
       id: "log_seed_7",
-      meal: "Snacks",
-      time: "4:15 PM",
+      meal: "Meriendas",
+      time: "16:15",
       foodId: "cottage-cheese",
-      name: "Cottage cheese",
-      detail: "Low-fat, black pepper",
+      name: "Requesón",
+      detail: "Bajo en grasa, con pimienta",
       amountLabel: "6 oz",
       kcal: 180,
       protein: 22,
@@ -560,7 +572,7 @@ export function createSeedState() {
     streak: 11,
     bestStreak: 18,
     aiUsage: { date: todayISO(), used: 1, limit: 3 },
-    planPrefs: { goal: "Strength cut", days: "3", diet: "High protein" },
+    planPrefs: { goal: "Definición", days: "3", diet: "Alta proteína" },
     plan: structuredClone(DEMO_PLAN),
     planSavedAt: null,
   };
@@ -594,8 +606,6 @@ export function loadState() {
   if (!Array.isArray(state.proteinHistory)) state.proteinHistory = seed.proteinHistory;
   if (!state.plan || !Array.isArray(state.plan.days)) state.plan = seed.plan;
 
-  // A demo should open on a complete day. Roll the seed forward on a new date
-  // without touching the member's saved plan or weight trend.
   if (state.day !== todayISO()) {
     state.day = todayISO();
     state.logs = seed.logs;
@@ -615,7 +625,7 @@ export function saveState(state) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
-    // Storage can be unavailable in private mode; the demo still works in memory.
+    // El almacenamiento puede no estar disponible en modo privado; la demo sigue en memoria.
   }
 }
 
@@ -623,7 +633,7 @@ export function clearState() {
   try {
     localStorage.removeItem(STORAGE_KEY);
   } catch {
-    // Nothing to clear.
+    // No hay nada que borrar.
   }
 }
 
@@ -648,7 +658,7 @@ export function totalsFor(logs) {
 export function shortDate(iso, opts = {}) {
   const [year, month, day] = iso.split("-").map(Number);
   const d = new Date(year, month - 1, day, 12);
-  return d.toLocaleDateString("en-US", {
+  return d.toLocaleDateString("es-US", {
     month: "short",
     day: "numeric",
     ...opts,
@@ -661,9 +671,9 @@ export function ageLabel(iso) {
   const now = new Date();
   now.setHours(12, 0, 0, 0);
   const days = Math.max(0, Math.round((now.getTime() - then) / MS_DAY));
-  if (days === 0) return "Today";
-  if (days === 1) return "Yesterday";
-  return `${days} days ago`;
+  if (days === 0) return "Hoy";
+  if (days === 1) return "Ayer";
+  return `Hace ${days} días`;
 }
 
 export { STORAGE_KEY };

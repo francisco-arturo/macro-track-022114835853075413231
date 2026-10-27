@@ -1,9 +1,12 @@
-# Fit Code Nutrition
+# Fit Code Nutrición
 
-A working front-end prototype of the Fit Code member nutrition app. It is built from the existing
-single-page concept, not from a rewrite: the macro targets, ounce and hand-portion logging, AI meal
-plan and dashboard are all here, plus the owner view, export and deletion flows the Phase 1 brief
-calls for.
+A working front-end prototype of the Fit Code member nutrition app, Spanish-first. The member-facing
+interface, seed data, error copy, PWA metadata and demo script are in Spanish. This developer README
+stays in English so another developer can pick up the repository.
+
+It is built from the existing single-page concept, not from a rewrite: the macro targets, ounce and
+hand-portion logging, AI meal plan and dashboard are all here, plus the owner view, export and
+deletion flows the Phase 1 brief calls for.
 
 The deployed shape is a static Vercel app with one serverless function at `api/meal-plan.mjs`.
 There is no build step.
