@@ -1,0 +1,12 @@
+dev-server.mjs
+verify.mjs
+init.ps1
+init.sh
+progress.md
+session-handoff.md
+AGENTS.md
+feature_list.json
+DEMO.md
+README.md
+node_modules
+.harness

@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Fit Code Nutrition</title>
+    <meta
+      name="description"
+      content="Fit Code member nutrition: macro targets, fast meal logging and a plan built around your training."
+    />
+    <meta name="theme-color" content="#141412" />
+    <meta name="color-scheme" content="light" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Fit Code" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" /></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4" /></symbol>
+      <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c4.4 0 7-2.8 7-6.7 0-3.2-1.8-5.5-4.2-7.6.1 2-1 3.4-2.1 3.9.2-4.2-1.6-7.7-3.6-9.1.2 3.6-4.1 6.3-4.1 11.7C5 18.1 7.9 21 12 21Z" /></symbol>
+      <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11Z" /></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1" /><rect x="14" y="4" width="6" height="6" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1" /><rect x="14" y="14" width="6" height="6" rx="1" /></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z" /><circle cx="12" cy="10" r="2.2" /></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" /><circle cx="12" cy="12" r="2.4" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16" /></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14M10 11v6M14 11v6" /></symbol>
+      <symbol id="i-install" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5" /><path d="M10 18h4M12 6v8M9 11l3 3 3-3" /></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.7-4M4 5v5h5M4 13a8 8 0 0 0 14.7 4M20 19v-5h-5" /></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></symbol>
+      <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3.5 11.5h17a8.5 8.5 0 0 1-17 0Z" /><path d="M9 7.5c0-1.2 1-1.8 1-3M13 7.5c0-1.2 1-1.8 1-3" /></symbol>
+      <symbol id="i-protein" viewBox="0 0 24 24"><path d="M8 3v7M5 3v4a3 3 0 0 0 6 0V3M8 10v11M17 3c-2.8 2.3-3.2 6.4-1.2 9.2L17 14v7" /></symbol>
+      <symbol id="i-carb" viewBox="0 0 24 24"><path d="M12 21V9M12 9C10 7 9 5 10 3c2 0 3 1.2 4 3M12 9c2-2 3-4 2-6-2 0-3 1.2-4 3" /></symbol>
+      <symbol id="i-shake" viewBox="0 0 24 24"><path d="M7 8h10l-1.2 12H8.2L7 8Z" /><path d="M8 5h8M9 5l1 3M13.5 4l3-1.5" /></symbol>
+      <symbol id="i-fruit" viewBox="0 0 24 24"><path d="M12 8c-4 0-6.5 3-6.5 6.3C5.5 18 8.2 21 12 21s6.5-3 6.5-6.7C18.5 11 16 8 12 8Z" /><path d="M12 8c0-2.5 1.6-4 4-4.5" /></symbol>
+      <symbol id="i-fat" viewBox="0 0 24 24"><path d="M12 3c3 5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-6 6-11Z" /><path d="M9 15c.4 1.9 1.6 2.8 3.5 3" /></symbol>
+    </svg>
+
+    <header class="topbar">
+      <button class="brand" data-view="today" aria-label="Fit Code home">
+        <span class="brand-word">FIT<span>/</span>CODE</span>
+        <span class="brand-sub">Nutrition</span>
+      </button>
+
+      <nav class="desk-nav" aria-label="Primary navigation">
+        <button class="nav-link is-active" data-view="today">Today</button>
+        <button class="nav-link" data-view="plan">Meal plan</button>
+        <button class="nav-link" data-view="progress">Progress</button>
+      </nav>
+
+      <div class="top-actions">
+        <span class="demo-pill"><span class="live-dot"></span> Demo member</span>
+        <button class="owner-link" data-view="review">
+          <svg class="icon"><use href="#i-grid"></use></svg>
+          <span>Owner review</span>
+        </button>
+        <button class="avatar" id="accountBtn" aria-label="Open account and settings">MC</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="view" data-view="today" id="view-today">
+        <div class="hero">
+          <div class="hero-copy-wrap">
+            <p class="eyebrow" id="todayLabel">Tuesday, October 27</p>
+            <h1>
+              <span id="heroGreeting">Good afternoon,</span>
+              <em id="heroName">Maya.</em>
+            </h1>
+            <p class="hero-copy" id="heroCopy">
+              Day 11 of your streak. <strong>41g of protein left</strong> to hit today's target.
+            </p>
+          </div>
+          <div class="streak-card">
+            <div class="streak-top">
+              <span class="panel-kicker">Current streak</span>
+              <svg class="icon flame"><use href="#i-flame"></use></svg>
+            </div>
+            <div class="streak-number"><span id="streakCount">11</span><small>days</small></div>
+            <div class="streak-foot">Best: <span id="bestStreak">18</span> days</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="stack">
+            <section class="panel fuel-panel" aria-labelledby="fuelTitle">
+              <div class="panel-head">
+                <span class="panel-kicker" id="fuelTitle">Daily fuel</span>
+                <span class="target-pill" id="calorieTargetPill">2,150 kcal target</span>
+              </div>
+
+              <div class="fuel-main">
+                <div class="ring-wrap">
+                  <svg class="calorie-ring" viewBox="0 0 176 176" aria-hidden="true">
+                    <circle class="ring-track" cx="88" cy="88" r="72"></circle>
+                    <circle class="ring-progress" id="ringProgress" cx="88" cy="88" r="72"></circle>
+                  </svg>
+                  <div class="ring-center">
+                    <strong id="caloriesLeft">821</strong>
+                    <span>kcal left</span>
+                  </div>
+                </div>
+
+                <div class="macro-stack">
+                  <div class="macro-row" data-macro="protein">
+                    <div class="macro-top">
+                      <span>Protein</span>
+                      <strong id="proteinValue">124 / 165g</strong>
+                    </div>
+                    <div class="macro-bar"><span id="proteinBar"></span></div>
+                    <div class="macro-foot"><span>Priority</span><em id="proteinLeft">41g left</em></div>
+                  </div>
+                  <div class="macro-row" data-macro="carbs">
+                    <div class="macro-top">
+                      <span>Carbs</span>
+                      <strong id="carbsValue">129 / 210g</strong>
+                    </div>
+                    <div class="macro-bar"><span id="carbsBar"></span></div>
+                    <div class="macro-foot"><span>Training fuel</span><em id="carbsLeft">81g left</em></div>
+                  </div>
+                  <div class="macro-row" data-macro="fat">
+                    <div class="macro-top">
+                      <span>Fat</span>
+                      <strong id="fatValue">30 / 62g</strong>
+                    </div>
+                    <div class="macro-bar"><span id="fatBar"></span></div>
+                    <div class="macro-foot"><span>Hormones</span><em id="fatLeft">32g left</em></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fuel-foot">
+                <span><strong id="caloriesConsumed">1,329</strong> eaten</span>
+                <span class="fuel-divider"></span>
+                <span><strong id="mealCount">7</strong> items logged</span>
+                <button class="text-btn" data-open-log>Log food <svg class="icon"><use href="#i-arrow"></use></svg></button>
+              </div>
+            </section>
+
+            <section class="meals-section" aria-labelledby="mealsTitle">
+              <div class="section-head">
+                <div>
+                  <p class="panel-kicker">Today's log</p>
+                  <h2 id="mealsTitle">Meals &amp; snacks</h2>
+                </div>
+                <button class="btn-outline" data-open-log>
+                  <svg class="icon"><use href="#i-plus"></use></svg>
+                  Log food
+                </button>
+              </div>
+
+              <div id="mealGroups" class="meal-groups"></div>
+
+              <button class="planned-meal" id="plannedDinner">
+                <span class="planned-icon"><svg class="icon"><use href="#i-spark"></use></svg></span>
+                <span class="planned-copy">
+                  <span class="mini-label">Dinner · planned</span>
+                  <strong>Sheet-pan salmon</strong>
+                  <span>Salmon, baby potatoes, broccolini</span>
+                </span>
+                <span class="planned-macros">
+                  <strong>720</strong>
+                  <span>kcal · 48g P</span>
+                </span>
+                <span class="planned-add">Log it <svg class="icon"><use href="#i-arrow"></use></svg></span>
+              </button>
+            </section>
+
+            <section class="panel water-panel" aria-labelledby="waterTitle">
+              <div class="water-head">
+                <div>
+                  <p class="panel-kicker">Hydration</p>
+                  <h2 id="waterTitle">Water</h2>
+                </div>
+                <div class="water-total"><strong id="waterCount">5</strong><span>/ 8 cups</span></div>
+              </div>
+              <div class="water-track" id="waterCups" aria-label="Water cups"></div>
+              <div class="water-foot">
+                <p>Cups are 8 oz. Tap a cup, or add one from the bar.</p>
+                <div class="water-actions">
+                  <button class="icon-btn" id="waterMinus" aria-label="Remove one cup"><svg class="icon"><use href="#i-minus"></use></svg></button>
+                  <button class="btn-small" id="waterPlus"><svg class="icon"><use href="#i-plus"></use></svg> Add cup</button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="stack side-stack">
+            <section class="panel targets-panel" aria-labelledby="targetsTitle">
+              <div class="panel-head">
+                <span class="panel-kicker" id="targetsTitle">Current target</span>
+                <span class="lime-tag">Recomp</span>
+              </div>
+              <div class="target-protein">
+                <strong>165</strong>
+                <span>g protein<br />per day</span>
+              </div>
+              <div class="target-breakdown">
+                <div><span>Calories</span><strong>2,150</strong></div>
+                <div><span>Carbs</span><strong>210g</strong></div>
+                <div><span>Fat</span><strong>62g</strong></div>
+              </div>
+              <div class="target-foot">
+                <span>Set by Coach Elena · Sep 14</span>
+                <button class="text-btn light" id="adjustTargetBtn">Adjust</button>
+              </div>
+            </section>
+
+            <section class="panel ai-panel" aria-labelledby="aiTitle">
+              <div class="ai-top">
+                <span class="panel-kicker">Fit Code AI</span>
+                <span class="ai-badge"><svg class="icon"><use href="#i-lock"></use></svg> Server-side</span>
+              </div>
+              <h2 id="aiTitle">Your next 3 days, built around today.</h2>
+              <p>A strength block with enough protein, not a spreadsheet of restriction.</p>
+              <div class="ai-usage-row">
+                <div class="usage-dots" id="aiUsageDots" aria-hidden="true"></div>
+                <span id="aiUsageLabel">2 of 3 generations left</span>
+              </div>
+              <button class="btn-dark" data-view="plan">
+                Open meal plan
+                <svg class="icon"><use href="#i-arrow"></use></svg>
+              </button>
+            </section>
+
+            <figure class="coach-card">
+              <div class="coach-head">
+                <span class="coach-avatar">ER</span>
+                <div><strong>Coach Elena</strong><span>Nutrition check-in · Tue</span></div>
+              </div>
+              <blockquote>“Your protein is trending up. Anchor breakfast at 35g and the rest takes care of itself.”</blockquote>
+              <figcaption>Targets update every 4 weeks. Reply in the Fit Code app.</figcaption>
+            </figure>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" data-view="plan" id="view-plan" hidden>
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">AI meal plan</p>
+            <h1>Food that <em>works.</em></h1>
+            <p class="page-copy">A plan shaped by your target, your training week and what you will actually cook.</p>
+          </div>
+          <div class="page-stamp">
+            <span class="panel-kicker">Saved plan</span>
+            <strong id="planTitle">3-day strength block</strong>
+            <span id="planMeta">Built around 2,150 kcal and 165g protein</span>
+          </div>
+        </div>
+
+        <div class="plan-layout">
+          <div class="stack">
+            <div class="plan-toolbar">
+              <div class="day-tabs" id="planDayTabs" role="tablist" aria-label="Plan days"></div>
+              <span class="plan-source" id="planSource">Demo plan · saved on this device</span>
+            </div>
+
+            <div id="planDays" class="plan-days"></div>
+
+            <section class="panel grocery-panel" aria-labelledby="groceryTitle">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Shop once</p>
+                  <h2 id="groceryTitle">Grocery list</h2>
+                </div>
+                <span class="muted-note" id="groceryCount">16 items</span>
+              </div>
+              <div class="grocery-grid" id="groceryList"></div>
+            </section>
+          </div>
+
+          <aside class="stack">
+            <section class="panel plan-controls" aria-labelledby="controlsTitle">
+              <div class="panel-head">
+                <span class="panel-kicker" id="controlsTitle">Rebuild the plan</span>
+                <span class="usage-badge" id="planUsageBadge">2 left</span>
+              </div>
+
+              <label class="field-label" for="planGoal">Goal</label>
+              <div class="select-wrap">
+                <select id="planGoal">
+                  <option>Strength cut</option>
+                  <option>Maintenance</option>
+                  <option>Lean build</option>
+                </select>
+                <svg class="icon"><use href="#i-chevron"></use></svg>
+              </div>
+
+              <label class="field-label" for="planDays">Block length</label>
+              <div class="select-wrap">
+                <select id="planDays">
+                  <option value="3">3 days</option>
+                  <option value="4">4 days</option>
+                  <option value="5">5 days</option>
+                </select>
+                <svg class="icon"><use href="#i-chevron"></use></svg>
+              </div>
+
+              <label class="field-label" for="planDiet">Food style</label>
+              <div class="select-wrap">
+                <select id="planDiet">
+                  <option>High protein</option>
+                  <option>Mostly plants</option>
+                  <option>Dairy free</option>
+                </select>
+                <svg class="icon"><use href="#i-chevron"></use></svg>
+              </div>
+
+              <button class="btn-primary" id="generatePlan">
+                <span class="btn-label">Generate plan</span>
+                <svg class="icon"><use href="#i-spark"></use></svg>
+              </button>
+              <p class="form-note" id="planStatus">Uses one of your 3 daily generations.</p>
+            </section>
+
+            <section class="panel guardrail-panel" aria-labelledby="guardrailsTitle">
+              <div class="panel-head">
+                <span class="panel-kicker" id="guardrailsTitle">Guardrails</span>
+                <svg class="icon"><use href="#i-lock"></use></svg>
+              </div>
+              <ul class="guardrail-list">
+                <li><span>01</span><p>Anthropic key lives in the server environment, never the browser.</p></li>
+                <li><span>02</span><p>3 generations per member, per day, enforced before the model call.</p></li>
+                <li><span>03</span><p>Goal, diet and length are allow-listed and validated.</p></li>
+                <li><span>04</span><p>Every call is metered against a member id and a date.</p></li>
+              </ul>
+              <p class="guardrail-foot">Production version writes usage to Postgres. This prototype meters in the function instance.</p>
+            </section>
+
+            <section class="panel principle-panel">
+              <p class="panel-kicker">The point of view</p>
+              <blockquote>“Enough protein. Enough carbs to train. Nothing you need a food scale for every day.”</blockquote>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" data-view="progress" id="view-progress" hidden>
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Progress</p>
+            <h1>The trend is <em>the truth.</em></h1>
+            <p class="page-copy">One weigh-in is noise. Keep logging and the line tells you what is working.</p>
+          </div>
+          <button class="btn-outline" id="logWeightBtn">
+            <svg class="icon"><use href="#i-plus"></use></svg>
+            Log weight
+          </button>
+        </div>
+
+        <div class="stat-row">
+          <article class="stat-card">
+            <span class="panel-kicker">Latest weight</span>
+            <div class="stat-value"><strong id="latestWeight">148.2</strong><span>lb</span></div>
+            <p id="weightDelta" class="stat-note">−1.6 lb since Sep 8</p>
+          </article>
+          <article class="stat-card">
+            <span class="panel-kicker">Protein · 7 days</span>
+            <div class="stat-value"><strong id="proteinAvg">160</strong><span>g avg</span></div>
+            <p id="proteinPct" class="stat-note">97% of target</p>
+          </article>
+          <article class="stat-card stat-card-dark">
+            <span class="panel-kicker">Streak</span>
+            <div class="stat-value"><strong id="streakStat">11</strong><span>days</span></div>
+            <p class="stat-note">Best run: 18 days</p>
+          </article>
+        </div>
+
+        <section class="panel chart-panel" aria-labelledby="weightTitle">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Bodyweight</p>
+              <h2 id="weightTitle">8-week trend</h2>
+            </div>
+            <span class="muted-note" id="weightRange">Sep 8 – Oct 27</span>
+          </div>
+          <div class="weight-chart" id="weightChart" role="img" aria-label="Bodyweight trend over the last eight weeks"></div>
+        </section>
+
+        <div class="progress-grid">
+          <section class="panel chart-panel" aria-labelledby="proteinTitle">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Consistency</p>
+                <h2 id="proteinTitle">Protein vs. target</h2>
+              </div>
+              <span class="muted-note">Target 165g</span>
+            </div>
+            <div class="protein-chart" id="proteinChart" role="img" aria-label="Protein intake over the last seven days"></div>
+          </section>
+
+          <section class="panel chart-panel" aria-labelledby="streakTitle">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Show up</p>
+                <h2 id="streakTitle">Last 14 days</h2>
+              </div>
+              <span class="muted-note"><strong>11</strong> logged</span>
+            </div>
+            <div class="streak-calendar" id="streakCalendar" role="img" aria-label="Logging calendar for the last fourteen days"></div>
+            <div class="calendar-key"><span class="key-dot"></span> Logged <span class="key-dot key-empty"></span> Missed</div>
+          </section>
+        </div>
+
+        <section class="panel data-panel">
+          <div>
+            <p class="panel-kicker">Your data</p>
+            <h2>Yours to take with you.</h2>
+            <p>Export every meal, weigh-in and plan as JSON. Account deletion removes the same records.</p>
+          </div>
+          <div class="data-actions">
+            <button class="btn-outline" data-export><svg class="icon"><use href="#i-download"></use></svg> Export data</button>
+            <button class="text-btn danger" id="deleteFromProgress"><svg class="icon"><use href="#i-trash"></use></svg> Delete account</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="view review-view" data-view="review" id="view-review" hidden>
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Owner preview · read-only</p>
+            <h1>Member <em>summary.</em></h1>
+            <p class="page-copy">The same rows you will open directly in the Supabase dashboard. No admin page in Phase 1.</p>
+          </div>
+          <span class="review-badge"><svg class="icon"><use href="#i-grid"></use></svg> member_summary</span>
+        </div>
+
+        <div class="review-banner">
+          <div class="review-banner-icon"><svg class="icon"><use href="#i-lock"></use></svg></div>
+          <div>
+            <strong>This view is for the owner, not the member app.</strong>
+            <p>It is backed by Postgres RLS and reached with the service role in the Supabase dashboard. A member policy can never return another member's row.</p>
+          </div>
+        </div>
+
+        <div class="stat-row review-stats">
+          <article class="stat-card"><span class="panel-kicker">Pilot members</span><div class="stat-value"><strong id="reviewCount">6</strong><span>active</span></div><p class="stat-note">10–30 planned for Phase 1</p></article>
+          <article class="stat-card"><span class="panel-kicker">Need a check-in</span><div class="stat-value"><strong id="reviewAtRisk">1</strong><span>at risk</span></div><p class="stat-note">6+ days since a log</p></article>
+          <article class="stat-card"><span class="panel-kicker">Protein adherence</span><div class="stat-value"><strong id="reviewAvg">86</strong><span>% avg</span></div><p class="stat-note">Across the last 7 days</p></article>
+        </div>
+
+        <section class="panel table-panel" aria-labelledby="summaryTitle">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Supabase view</p>
+              <h2 id="summaryTitle">All members</h2>
+            </div>
+            <span class="muted-note" id="reviewUpdated">Updated just now</span>
+          </div>
+          <div class="table-wrap">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Days since log</th>
+                  <th>Streak</th>
+                  <th>Protein · 7d</th>
+                  <th>Latest weight</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="summaryRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="review-grid">
+          <section class="panel security-panel">
+            <p class="panel-kicker">Security model</p>
+            <h2>Locked at the row, not the screen.</h2>
+            <ul class="security-list">
+              <li><span>01</span><p><strong>Member rows.</strong> Every member-owned table carries <code>member_id</code>. Policies compare it to <code>auth.uid()</code> on select, insert, update and delete.</p></li>
+              <li><span>02</span><p><strong>Admin rows.</strong> An <code>is_admin()</code> security-definer helper checks the caller's role without recursing through profiles.</p></li>
+              <li><span>03</span><p><strong>Server only.</strong> The Anthropic key and service-role key stay in server environment variables. The browser gets the anon key and a session token.</p></li>
+            </ul>
+          </section>
+
+          <section class="panel sql-panel">
+            <div class="panel-head">
+              <div><p class="panel-kicker">SQL preview</p><h2>member_summary</h2></div>
+              <button class="text-btn" id="copySqlBtn">Copy</button>
+            </div>
+            <pre class="sql-block"><code id="viewSql"></code></pre>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <button class="bottom-link is-active" data-view="today">
+        <svg class="icon"><use href="#i-bowl"></use></svg><span>Today</span>
+      </button>
+      <button class="bottom-link" data-view="plan">
+        <svg class="icon"><use href="#i-spark"></use></svg><span>Plan</span>
+      </button>
+      <button class="bottom-log" data-open-log aria-label="Log food">
+        <svg class="icon"><use href="#i-plus"></use></svg>
+      </button>
+      <button class="bottom-link" data-view="progress">
+        <svg class="icon"><use href="#i-flame"></use></svg><span>Progress</span>
+      </button>
+      <button class="bottom-link" id="mobileAccountBtn">
+        <svg class="icon"><use href="#i-grid"></use></svg><span>Account</span>
+      </button>
+    </nav>
+
+    <dialog class="dialog sheet" id="logDialog" aria-labelledby="logTitle">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Quick log</p>
+          <h2 id="logTitle">What did you eat?</h2>
+        </div>
+        <button class="icon-btn" data-close-dialog aria-label="Close"><svg class="icon"><use href="#i-close"></use></svg></button>
+      </div>
+
+      <div class="dialog-body">
+        <label class="search-field">
+          <svg class="icon"><use href="#i-search"></use></svg>
+          <input id="foodSearch" type="search" placeholder="Search chicken, rice, shake…" autocomplete="off" />
+        </label>
+
+        <div class="food-grid" id="foodList"></div>
+
+        <div class="portion-panel" id="portionPanel" hidden>
+          <div class="selected-food">
+            <span class="food-orb" id="selectedOrb"><svg class="icon"><use href="#i-bowl"></use></svg></span>
+            <div>
+              <strong id="selectedName">Greek yogurt bowl</strong>
+              <span id="selectedDetail">Yogurt, blueberries, granola</span>
+            </div>
+            <span class="selected-kcal" id="selectedKcal">310 kcal</span>
+          </div>
+
+          <div class="portion-row">
+            <div class="segmented" role="group" aria-label="Portion unit">
+              <button type="button" class="is-active" data-unit="oz">Ounces</button>
+              <button type="button" data-unit="hand">Hand portions</button>
+            </div>
+            <div class="qty-stepper">
+              <button type="button" class="icon-btn" id="qtyMinus" aria-label="Decrease portion"><svg class="icon"><use href="#i-minus"></use></svg></button>
+              <div class="qty-value"><strong id="qtyValue">8</strong><span id="qtyUnit">oz</span></div>
+              <button type="button" class="icon-btn" id="qtyPlus" aria-label="Increase portion"><svg class="icon"><use href="#i-plus"></use></svg></button>
+            </div>
+          </div>
+          <p class="portion-hint" id="portionHint">8 oz · about the size of your cupped hand</p>
+
+          <div class="meal-pick" id="mealPick" role="group" aria-label="Meal">
+            <button type="button" data-meal="Breakfast">Breakfast</button>
+            <button type="button" data-meal="Lunch">Lunch</button>
+            <button type="button" data-meal="Dinner">Dinner</button>
+            <button type="button" data-meal="Snacks">Snacks</button>
+          </div>
+
+          <div class="macro-preview" id="macroPreview">
+            <div><strong id="previewKcal">310</strong><span>kcal</span></div>
+            <div><strong id="previewProtein">24g</strong><span>protein</span></div>
+            <div><strong id="previewCarbs">38g</strong><span>carbs</span></div>
+            <div><strong id="previewFat">7g</strong><span>fat</span></div>
+          </div>
+
+          <button class="btn-primary" id="addFoodBtn">
+            <span>Add to <span id="addMealLabel">Breakfast</span></span>
+            <svg class="icon"><use href="#i-plus"></use></svg>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="dialog small" id="weightDialog" aria-labelledby="weightDialogTitle">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Daily log</p>
+          <h2 id="weightDialogTitle">Log your weight</h2>
+        </div>
+        <button class="icon-btn" data-close-dialog aria-label="Close"><svg class="icon"><use href="#i-close"></use></svg></button>
+      </div>
+      <div class="dialog-body">
+        <p class="dialog-copy">Same scale, same time of day. The trend matters more than the number.</p>
+        <label class="field-label" for="weightInput">Weight in pounds</label>
+        <div class="weight-input-wrap">
+          <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="60" max="500" value="148.2" />
+          <span>lb</span>
+        </div>
+        <button class="btn-primary" id="saveWeightBtn">Save weigh-in <svg class="icon"><use href="#i-check"></use></svg></button>
+      </div>
+    </dialog>
+
+    <dialog class="dialog" id="accountDialog" aria-labelledby="accountTitle">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Account</p>
+          <h2 id="accountTitle">Your Fit Code</h2>
+        </div>
+        <button class="icon-btn" data-close-dialog aria-label="Close"><svg class="icon"><use href="#i-close"></use></svg></button>
+      </div>
+      <div class="dialog-body">
+        <div class="account-head">
+          <span class="avatar avatar-large" id="accountAvatar">MC</span>
+          <div>
+            <strong id="accountName">Maya Chen</strong>
+            <span id="accountEmail">maya.chen@fitcode.test</span>
+            <span class="role-pill" id="accountRole">Member</span>
+          </div>
+        </div>
+
+        <div class="account-grid">
+          <div><span>Home gym</span><strong id="accountLocation">Lincoln Park</strong></div>
+          <div><span>Member since</span><strong id="accountSince">September 2026</strong></div>
+          <div><span>Coach</span><strong id="accountCoach">Elena Ruiz</strong></div>
+          <div><span>Goal</span><strong id="accountGoal">Recomp</strong></div>
+        </div>
+
+        <div class="account-note">
+          <svg class="icon"><use href="#i-lock"></use></svg>
+          <p><strong>Production auth:</strong> Supabase email/password with reset, optional Google, and RLS on every member table. This demo runs as a seeded member session so the app opens straight into the work.</p>
+        </div>
+
+        <div class="settings-list">
+          <button class="setting-row" data-export>
+            <span class="setting-icon"><svg class="icon"><use href="#i-download"></use></svg></span>
+            <span class="setting-copy"><strong>Export my data</strong><small>JSON with logs, plans, weights and targets</small></span>
+            <svg class="icon chev"><use href="#i-arrow"></use></svg>
+          </button>
+          <button class="setting-row" id="installBtn">
+            <span class="setting-icon"><svg class="icon"><use href="#i-install"></use></svg></span>
+            <span class="setting-copy"><strong>Install on this device</strong><small>Add Fit Code to your home screen</small></span>
+            <svg class="icon chev"><use href="#i-arrow"></use></svg>
+          </button>
+          <button class="setting-row" id="resetDemo">
+            <span class="setting-icon"><svg class="icon"><use href="#i-refresh"></use></svg></span>
+            <span class="setting-copy"><strong>Reset demo data</strong><small>Restore the seeded day and plan</small></span>
+            <svg class="icon chev"><use href="#i-arrow"></use></svg>
+          </button>
+          <button class="setting-row danger" id="deleteAccountBtn">
+            <span class="setting-icon"><svg class="icon"><use href="#i-trash"></use></svg></span>
+            <span class="setting-copy"><strong>Delete account</strong><small>Remove your profile and every record</small></span>
+            <svg class="icon chev"><use href="#i-arrow"></use></svg>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="dialog small" id="deleteDialog" aria-labelledby="deleteTitle">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow danger-text">Irreversible</p>
+          <h2 id="deleteTitle">Delete this account?</h2>
+        </div>
+        <button class="icon-btn" data-close-dialog aria-label="Close"><svg class="icon"><use href="#i-close"></use></svg></button>
+      </div>
+      <div class="dialog-body">
+        <p class="dialog-copy">This removes the profile, macro plan, meal logs, weigh-ins, water logs and AI usage history. In production the server deletes the auth user and cascades the rows.</p>
+        <div class="delete-actions">
+          <button class="btn-outline" data-close-dialog>Keep my account</button>
+          <button class="btn-danger" id="confirmDelete">Delete everything</button>
+        </div>
+      </div>
+    </dialog>
+
+    <section class="farewell" id="farewell" hidden>
+      <div class="farewell-card">
+        <span class="brand-word">FIT<span>/</span>CODE</span>
+        <p class="eyebrow">Account deleted</p>
+        <h1>Your data is <em>gone.</em></h1>
+        <p>Profile, logs, plans and weigh-ins were removed from this device. A production build also deletes the Supabase auth user and cascades every member-owned row.</p>
+        <button class="btn-primary" id="restoreDemo">Restore the demo <svg class="icon"><use href="#i-refresh"></use></svg></button>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

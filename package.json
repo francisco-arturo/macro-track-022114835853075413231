@@ -1,0 +1,11 @@
+{
+  "name": "fit-code-macro-track",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fit Code member nutrition app prototype: macro targets, meal logging, AI meal plans and a Supabase review view.",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "check": "node verify.mjs"
+  }
+}
